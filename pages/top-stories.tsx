@@ -1,4 +1,6 @@
 import { baseUrl } from "../constants";
+import { Item, User } from "../models";
+import { GetServerSideProps } from 'next';
 
 const TopStories = ({ posts }) => {
   return (
@@ -34,20 +36,48 @@ const TopStories = ({ posts }) => {
 
 export default TopStories;
 
+const userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36';
 
-export async function getServerSideProps() {
-  const resItemIds = await fetch(`${baseUrl}topstories.json`);
-  const itemIds = await resItemIds.json();
+export const getServerSideProps: GetServerSideProps = async ({}) => {
+  // Get all the item ids from the api. Await them because we need them for the next step.
+  const resItemIds = await fetch(
+    `${baseUrl}topstories.json?`, 
+    {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        Accept: 'application/json',
+        'User-Agent': userAgent
+      }
+    }
+  );
+  
+  // Await the itemIds. itemIds is an array of integer ids.
+  const itemIds: number[] = await resItemIds.json();
 
+  // Create an array of api request urls.
   const urls = itemIds.map(id => `${baseUrl}item/${id}`);
+
+  // Create an array of request promises to be resolved concurrently 
   const requests = urls.map(url => fetch(url));
 
-  Promise.all(requests)
-    .then(responses => Promise.all(responses.map(r => r.json())))
-    .then(posts => posts.forEach(p => console.log(p)))
-    .catch(thing => console.log(thing));
+  try {
+    // requests to for each item have been made and returned as an array of promises. now resolve promises
+    const promises = await Promise.all(requests);    // all these seem to come back with status 200 OK
+    
+    // idk man
+    // const x = await Promise.allSettled(promises);
+    // console.log(x.map(p => p.value))
+  } catch(err) {
+    console.log(Object.entries(err));
+  }
 
-  if (!itemIds) return { notFound: true };
+  // Promise.all(requests)
+  //   .then(responses => Promise.all(responses.map(r => r.json())))
+  //   .then(posts => posts.forEach(p => console.log(p)))
+  //   .catch(thing => console.log(thing));
+
+  // if (!itemIds) return { notFound: true };
   
   // let posts = [];   // array of post objects
   // for (let i = 0; i < itemIds.length; i++) {
