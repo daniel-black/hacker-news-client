@@ -1,31 +1,27 @@
-import { useRouter } from "next/router";
 import ActiveLink from "./activeLink";
 
 const Navbar = () => {
-  const router = useRouter();
-  
-
   return (
-    <nav className="flex justify-between px-10">
+    <nav className="bg-slate-50 flex justify-between items-center px-32 text-2xl font-mono h-20 shadow">
       
       <ActiveLink activeClassName='active' href='/'>
-        <a>Hacker News Client</a>
+        <a className="font-bold">Hacker News Client</a>
       </ActiveLink>
 
       <ul className="flex space-x-6">
         <li>
           <ActiveLink activeClassName='active' href='/stories/best'>
-            <a>Best</a>
+            <a className="hover:bg-slate-200 hover:shadow px-4 py-1 rounded-full duration-75">Best</a>
           </ActiveLink>
         </li>
         <li>
           <ActiveLink activeClassName='active' href='/stories/top'>
-            <a>Top</a>
+            <a className="hover:bg-slate-200 hover:shadow px-4 py-1 rounded-full duration-75">Top</a>
           </ActiveLink>
         </li>
         <li>
           <ActiveLink activeClassName='active' href='/stories/new'>
-            <a>New</a>
+            <a className="hover:bg-slate-200 hover:shadow px-4 py-1 rounded-full duration-75">New</a>
           </ActiveLink>
         </li>
       </ul>

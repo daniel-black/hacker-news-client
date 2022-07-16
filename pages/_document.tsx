@@ -14,7 +14,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head />
-        <body className='min-h-full flex flex-col bg-slate-200'>
+        <body className='min-h-full bg-slate-100'>
           <Main />
           <NextScript />
         </body>
