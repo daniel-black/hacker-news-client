@@ -1,13 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { getMaxItemId, getXStories } from '../utils/hackerNewsCalls';
 
 const Home: NextPage = () => {
-
-  const f = async () => {
-    const x = await getXStories('best');
-    console.log(x);
-  }
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
@@ -20,7 +14,6 @@ const Home: NextPage = () => {
         <h1 className="text-6xl font-bold">
         Bing Bong
         </h1>
-        <button onClick={f}>Click me</button>
       </main>
 
       <footer className="flex h-24 w-full items-center justify-center border-t">
