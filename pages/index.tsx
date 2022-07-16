@@ -5,7 +5,7 @@ import Container from '../components/container';
 const Home: NextPage = () => {
 
   return (
-    <>
+    <div className='flex-grow'>
       <Head>
         <title>Hacker News Client</title>
         <link rel="icon" href="/favicon.ico" />
@@ -18,7 +18,7 @@ const Home: NextPage = () => {
           </h1>
         </div>
       </Container>
-    </>
+    </div>
   )
 }
 

@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
+import Container from "../../components/container";
 import Item from "../../components/item";
 import { StoryType, ItemModel } from "../../models";
 import { getXStories } from "../../utils/hackerNewsCalls";
@@ -7,9 +8,11 @@ const Stories = (props: { posts: ItemModel[]; }) => {
   const { posts } = props;
 
   return (
-    <div>
-      {posts.map((post, index) => <Item {...post} key={index} />)}
-    </div>
+    <Container>
+      <div className="mt-4 space-y-4">
+        {posts.map((post, index) => <Item {...post} key={index} />)}
+      </div>
+    </Container>
   );
 }
 

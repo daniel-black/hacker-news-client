@@ -4,6 +4,6 @@
 
 @layer base {
   .active {
-    @apply bg-slate-300 px-4 py-1 rounded-full shadow;
+    @apply bg-slate-300 px-2 sm:px-3 md:px-4 py-1 rounded-full shadow;
   }
 }

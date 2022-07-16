@@ -4,6 +4,7 @@ import { ItemModel } from "../../models";
 import Item from "../../components/item";
 import axios from 'axios';
 import useSWR from "swr";
+import Container from "../../components/container";
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
@@ -20,7 +21,9 @@ const ItemPage: NextPage = () => {
   const item: ItemModel = data;
 
   return (
-    <Item {...item} />
+    <Container>
+      <Item {...item} />
+    </Container>
   );
 }
 
