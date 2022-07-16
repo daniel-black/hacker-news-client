@@ -18,8 +18,6 @@ const User: NextPage = () => {
 
   const user: User = data;
 
-
-
   return (
     <>
       <p>User: {user.id}</p>
