@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { User, Item } from '../models';
+import { StoryType, User, Item } from '../models';
 
 const instance = axios.create({
   baseURL: "https://hacker-news.firebaseio.com/v0"
@@ -55,4 +55,19 @@ export const getNMostRecentItems = async (n: number = 10) => {
   const posts = await Promise.all(requests);
 
   return posts;
+}
+
+export const getXStories = async (storyType: StoryType, num: number = 30) => {
+  const { data, status } = await instance.get(`/${storyType}stories.json?limitToFirst=${num}&orderBy="$key"`);
+
+  if (status !== 200) {
+    return;
+  }
+   
+  const itemIds: number[] = data;
+
+  const requests = itemIds.map(id => getItem(id));
+  const items = await Promise.all(requests);
+
+  return items;
 }
