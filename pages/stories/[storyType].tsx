@@ -6,7 +6,7 @@ import { getXStories } from "../../utils/hackerNewsCalls";
 
 const Stories = (props: { posts: ItemModel[]; }) => {
   const { posts } = props;
-
+  console.dir(posts);
   return (
     <Container>
       <div className="mt-4 space-y-4">
