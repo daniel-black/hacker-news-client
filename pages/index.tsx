@@ -1,12 +1,12 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { getMaxItemId } from '../utils/hackerNewsCalls';
+import { getMaxItemId, getXStories } from '../utils/hackerNewsCalls';
 
 const Home: NextPage = () => {
 
   const f = async () => {
-    const id = await getMaxItemId();
-    console.log(id);
+    const x = await getXStories('best');
+    console.log(x);
   }
 
   return (

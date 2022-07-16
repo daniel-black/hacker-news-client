@@ -1,5 +1,7 @@
 // Defines the shape of response objects from the Hacker News API
 
+export type StoryType = 'top' | 'new' | 'best';
+
 export interface Item {
   id: number,
   deleted: boolean,
