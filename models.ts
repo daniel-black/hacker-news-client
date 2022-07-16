@@ -2,7 +2,7 @@
 
 export type StoryType = 'top' | 'new' | 'best';
 
-export interface Item {
+export interface ItemModel {
   id: number,
   deleted: boolean,
   type: "job" | "story" | "comment" | "poll" | "pollopt",
@@ -10,17 +10,17 @@ export interface Item {
   time: number,        // unix time 
   text: string,        // HTML string
   dead?: boolean,
-  parent: Item, 
-  poll?: Item,
+  parent: ItemModel, 
+  poll?: ItemModel,
   kids?: number[],     // the ids of the item's comments, in ranked display order
   url?: string,
   score: number,       // story's score or votes on a pollopt
   title: string,
-  parts?: Item,
+  parts?: ItemModel,
   descendants?: number
 }
 
-export interface User {
+export interface UserModel {
   id: string,
   created: number,
   karma: number,
