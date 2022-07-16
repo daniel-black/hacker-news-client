@@ -5,12 +5,13 @@ const instance = axios.create({
   baseURL: "https://hacker-news.firebaseio.com/v0"
 });
 
-export const getMaxItemId = async () => {
+export const getMaxItemId = async (): Promise<number> => {
   try {
-    const response = await instance.get('/maxitem.json');
-    if (response.status === 200) {
-      return response.data;
+    const { data, status } = await instance.get('/maxitem.json');
+    if (status === 200) {
+      return data as number;
     }
+    throw new Error('Response was not 200 OK');
   } catch (err) {
     console.error(err);
     return -1;
@@ -19,9 +20,9 @@ export const getMaxItemId = async () => {
 
 export const getItem = async (id: number) => {
   try {
-    const response = await instance.get(`item/${id}.json`);
-    if (response.status === 200) {
-      return response.data;
+    const { data, status } = await instance.get(`item/${id}.json`);
+    if (status === 200) {
+      return data as Item;
     }
   } catch (err) {
     console.log(err);
@@ -30,9 +31,9 @@ export const getItem = async (id: number) => {
 
 export const getUser = async (id: string) => {
   try {
-    const response = await instance.get(`user/${id}.json`);
-    if (response.status === 200) {
-      return response.data;
+    const { data, status } = await instance.get(`user/${id}.json`);
+    if (status === 200) {
+      return data as User;
     }
   } catch (err) {
     console.log(err);
