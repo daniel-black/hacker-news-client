@@ -2,7 +2,7 @@ import { ItemModel } from "../models"
 
 const Item = (props: ItemModel) => {
   return (
-    <div className="bg-slate-300 p-3 rounded mb-3">
+    <div className="bg-slate-300 p-3 rounded m-3">
       {props.url ? 
         <a href={props.url}>{props.title}</a> :
         <h2>{props.title}</h2>

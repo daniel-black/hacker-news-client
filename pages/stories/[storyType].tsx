@@ -5,18 +5,13 @@ import { getXStories } from "../../utils/hackerNewsCalls";
 
 const Stories = (props: { posts: ItemModel[]; }) => {
   const { posts } = props;
-  console.dir(posts)
 
   return (
-    <>
-      {posts.map(post => {
-        <Item {...post} />
-      })}
-    </>
+    <div>
+      {posts.map((post, index) => <Item {...post} key={index} />)}
+    </div>
   );
 }
-
-export default Stories;
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -45,3 +40,5 @@ export const getStaticProps: GetStaticProps = async (context: GetStaticPropsCont
     props: { posts }
   };
 }
+
+export default Stories;

@@ -18,7 +18,6 @@ const ItemPage: NextPage = () => {
   if (!data) return <div>loading...</div>
 
   const item: ItemModel = data;
-  console.log(item);
 
   return (
     <Item {...item} />
