@@ -24,21 +24,27 @@ const UserPage: NextPage = () => {
     if (!user.about) return null;
 
     return (
-      <p className="italic text-xl">"{user.about}"</p>
+      <div className="flex items-start border-b-2 border-dashed border-slate-300 pb-2 mb-2">
+        <span>✨&nbsp;</span>
+        <span dangerouslySetInnerHTML={{ __html: user.about }}></span>
+      </div>
+      
     );
   }
 
   return (
     <Container>
-      <div className="bg-slate-200 p-3 rounded-xl space-y-8 max-w-full">
+      <div className="space-y-8 max-w-full">
         <div className="flex">
-          <div className="h-32 w-32 rounded-full mr-3 bg-gradient-to-br from-rose-200 to-indigo-400 shadow-lg"></div>
+          <div className="h-32 w-32 rounded-full mr-5 bg-gradient-to-br from-rose-200 to-indigo-400 shadow-lg"></div>
           <p className="text-8xl font-bold flex items-center">{user.id}</p>
         </div>
-        {renderAbout()}
-        <p>Joined: {new Date(user.created * 1000).toLocaleDateString()}</p>
-        <p>Karma: {user.karma}</p>
-        <p>Posts: [{user.submitted?.toString()}]</p>
+        <div className="bg-slate-200/70 text-xl py-3 px-6 rounded-xl max-w-fit shadow-inner">
+          {renderAbout()}
+          <p>📅 Joined in {new Date(user.created * 1000).getFullYear()}</p>
+          <p>🔼 {user.karma} Karma</p>
+        </div>
+        {/* <p>Posts: [{user.submitted?.toString()}]</p> */}
       </div>
     </Container>
   );
