@@ -10,18 +10,24 @@ const Navbar = () => {
 
       <ul className="flex space-x-2 sm:space-x-3 md:space-x-6">
         <li>
-          <ActiveLink activeClassName='active' href='/stories/best'>
-            <a className="hover:bg-slate-200 hover:shadow px-2 sm:px-3 md:px-4 py-1 rounded-full duration-75">Best</a>
+          <ActiveLink activeClassName='active' href='/stories/top'>
+            <a className="hover:bg-slate-200 hover:shadow px-2 sm:px-3 md:px-4 py-1 rounded-full duration-75">
+              <span className="hidden sm:inline">🔥</span>Top
+            </a>
           </ActiveLink>
         </li>
         <li>
-          <ActiveLink activeClassName='active' href='/stories/top'>
-            <a className="hover:bg-slate-200 hover:shadow px-2 sm:px-3 md:px-4 py-1 rounded-full duration-75">Top</a>
+          <ActiveLink activeClassName='active' href='/stories/best'>
+            <a className="hover:bg-slate-200 hover:shadow px-2 sm:px-3 md:px-4 py-1 rounded-full duration-75">
+              <span className="hidden sm:inline">🔼</span>Best
+            </a>
           </ActiveLink>
         </li>
         <li>
           <ActiveLink activeClassName='active' href='/stories/new'>
-            <a className="hover:bg-slate-200 hover:shadow px-2 sm:px-3 md:px-4 py-1 rounded-full duration-75">New</a>
+            <a className="hover:bg-slate-200 hover:shadow px-2 sm:px-3 md:px-4 py-1 rounded-full duration-75">
+              <span className="hidden sm:inline">❇️</span>New
+            </a>
           </ActiveLink>
         </li>
       </ul>
