@@ -1,24 +1,20 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { UserModel } from "../../models";
-// import User from "../../components/user";
-import axios from 'axios';
-import useSWR from "swr";
 import Container from "../../components/container";
-
-const fetcher = (url: string) => axios.get(url).then(res => res.data);
+import UserItem from "../../components/userItem";
+import useUser from "../../hooks/useUser";
+import { ItemModel, UserModel } from "../../models";
 
 const UserPage: NextPage = () => {
+
   const router = useRouter();
-  const { id } = router.query;
-  const route = `https://hacker-news.firebaseio.com/v0/user/${id}.json`;
+  let { id } = router.query;
+  id = id as string;
 
-  const { data, error } = useSWR(route, fetcher);
+  const { user, isLoading, isError } = useUser(id);
 
-  if (error) return <div>failed to load</div>
-  if (!data) return <div>loading...</div>
-
-  const user: UserModel = data;
+  if (isError) return <div>failed to load</div>
+  if (isLoading) return <div>loading...</div>
 
   const renderAbout = () => {
     if (!user.about) return null;
@@ -44,7 +40,9 @@ const UserPage: NextPage = () => {
           <p>📅 Joined in {new Date(user.created * 1000).getFullYear()}</p>
           <p>🔼 {user.karma} Karma</p>
         </div>
+        <UserItem />
         {/* <p>Posts: [{user.submitted?.toString()}]</p> */}
+        
       </div>
     </Container>
   );

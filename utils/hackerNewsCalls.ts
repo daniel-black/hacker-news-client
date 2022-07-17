@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { StoryType, User, Item } from '../models';
+import { StoryType, UserModel, ItemModel } from '../models';
 
 const instance = axios.create({
   baseURL: "https://hacker-news.firebaseio.com/v0"
@@ -22,7 +22,7 @@ export const getItem = async (id: number) => {
   try {
     const { data, status } = await instance.get(`item/${id}.json`);
     if (status === 200) {
-      return data as Item;
+      return data as ItemModel;
     }
   } catch (err) {
     console.log(err);
@@ -33,7 +33,7 @@ export const getUser = async (id: string) => {
   try {
     const { data, status } = await instance.get(`user/${id}.json`);
     if (status === 200) {
-      return data as User;
+      return data as UserModel;
     }
   } catch (err) {
     console.log(err);
@@ -66,6 +66,10 @@ export const getXStories = async (storyType: StoryType, num: number = 30) => {
    
   const itemIds: number[] = data;
 
+  return getAllItems(itemIds);
+}
+
+export const getAllItems = async (itemIds: number[]) => {
   const requests = itemIds.map(id => getItem(id));
   const items = await Promise.all(requests);
 
