@@ -28,7 +28,13 @@ const Stories = (props: StoriesProps) => {
     <Container>
       <div className="space-y-4">
         <h2 className="font-mono">{getHeadingWording()}</h2>
-        {posts.map((post, index) => <Item {...post} key={index} />)}
+        {posts.map((post, index) => <Item {...post} index={+index + 1} key={index} />)}
+        <button 
+              className="shadow hover:shadow-lg px-3 py-1 text-indigo-500 w-full text-xl font-extrabold bg-indigo-100 border-indigo-500 border-2 rounded-xl hover:bg-indigo-500 hover:text-white duration-100 ease-in-out"
+              onClick={() => setItemsOnPage(itemsOnPage + initialStoryCount)}
+            >
+              Show next {initialStoryCount} posts
+        </button>
       </div>
     </Container>
   );

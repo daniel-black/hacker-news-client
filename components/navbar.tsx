@@ -5,7 +5,7 @@ const Navbar = () => {
     <nav className="bg-slate-50 flex justify-between items-center px-4 md:24 lg:px-32 sm:text-xl md:text-2xl font-mono h-12 sm:h-16 md:h-20 shadow">
       
       <ActiveLink activeClassName='active' href='/'>
-        <a className="font-bold">Hacker News Client</a>
+        <a className="font-bold">Hacker New Client</a>
       </ActiveLink>
 
       <ul className="flex space-x-2 sm:space-x-3 md:space-x-6">
