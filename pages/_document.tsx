@@ -14,7 +14,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head />
-        <body className='min-h-full  overflow-x-hidden bg-slate-100'>
+        <body className='min-h-full  overflow-x-hidden bg-slate-100 selection:bg-violet-300'>
           <Main />
           <NextScript />
         </body>
