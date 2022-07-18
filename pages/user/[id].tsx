@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Item from '../../components/item/item';
 import Container from '../../components/structure/container';
 import UserCircleAndName from '../../components/user/userCircleAndName';
@@ -19,11 +19,25 @@ const UserPage = (props: UserPageProps) => {
   const [itemCount, setItemCount] = useState(props.items.length);
   const [loadingItems, setLoadingItems] = useState(false);
 
+  useEffect(() => {
+    async function loadItems() {
+      const itemIds = user.submitted!.slice(items.length, itemCount);
+      const requests = itemIds.map(id => axios.get(`/item/${id}.json`));
+      const responses = await Promise.all(requests);
+
+      const newItems: ItemModel[] = responses.map(response => response.data);
+      setItems(items.concat(newItems));
+      setLoadingItems(false);
+    }
+    loadItems();
+  }, [itemCount]);
+
   const renderNoItems = () => <h3 className='text-2xl p-3 bg-amber-200 font-extrabold text-amber-500 rounded-xl w-full shadow-inner text-center'>No posts</h3>;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     const increment = +e.currentTarget.value;
     if (increment + itemCount > user.submitted!.length) return;
+    setLoadingItems(true);
     setItemCount(increment + itemCount);
   }
 
