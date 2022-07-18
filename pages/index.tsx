@@ -14,21 +14,20 @@ const Home: NextPage = () => {
 
       <Container>
         <div className='text-center pt-6'>
-          <h1 className="text-5xl font-bold leading-loose">
-            Clone of the popular website 
-            <a className='flex items-end justify-center'
-              href="https://news.ycombinator.com" target="_blank" rel="norefferer">
+          <h2 className="text-amber-600 text-5xl font-bold">Clone of the popular website</h2>
+          <a className='flex flex-col items-center space-y-6 justify-center lg:flex-row lg:space-y-0 lg:space-x-3 group'
+            href="https://news.ycombinator.com" target="_blank" rel="norefferer">
+            <div className='w-32 h-32 order-last lg:order-first mt-6 relative group-hover:brightness-110 duration-200 ease-in-out'>
               <Image 
                 src="/Y_Combinator_logo.webp"
                 alt='Y Combinator Logo'
-                width={88}
-                height={88}
+                layout='fill'
               />
-              <span className='ml-4 font-extrabold text-8xl text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-orange-500 to-amber-400 hover:from-orange-500 hover:to-yellow-500 hover:via-amber-400 duration-300 ease-in-out'>
-                Hacker News
-              </span>
-            </a>
-          </h1>
+            </div>
+            <span className='font-extrabold text-8xl text-transparent bg-clip-text bg-gradient-to-br from-yellow-500 via-orange-500 to-amber-400'>
+              Hacker News
+            </span>
+          </a>
         </div>
       </Container>
     </div>
