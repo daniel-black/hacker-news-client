@@ -7,7 +7,6 @@ import Container from '../../components/structure/container';
 import TileData from '../../components/user/tileData';
 import UserCircleAndName from '../../components/user/userCircleAndName';
 import UserInfo from '../../components/user/userInfo';
-import UserSummaryTile from '../../components/user/userSummaryTile';
 import { ItemModel, UserModel } from '../../models';
 import axios from '../../utils/axios';
 
