@@ -1,103 +1,98 @@
-import { NextPage } from "next";
-import { useRouter } from "next/router";
-import Container from "../../components/structure/container";
-import UserItem from "../../components/user/userItem";
-import useUser from "../../hooks/useUser";
-import { ItemModel, UserModel } from "../../models";
-import { getAllItems, getItem } from "../../utils/hackerNewsCalls";
-import { useState } from "react";
-import UserInfo from "../../components/user/userInfo";
-import UserCircleAndName from "../../components/user/userCircleAndName";
-import { useEffect } from "react";
+import { GetServerSideProps } from 'next';
+import React, { useState } from 'react';
+import Container from '../../components/structure/container';
+import User from '../../components/user/user';
+import UserCircleAndName from '../../components/user/userCircleAndName';
+import UserInfo from '../../components/user/userInfo';
+import { ItemModel, UserModel } from '../../models';
+import axios from '../../utils/axios';
 
-const UserPage: NextPage = () => {
-  // Grab user id
-  const router = useRouter();
-  let { id } = router.query;
-  id = id as string;
+type UserPageProps = { 
+  user: UserModel,
+  items: ItemModel[]
+};
 
-  // Get user 
-  const { user, isLoading, isError } = useUser(id);
+const UserPage = (props: UserPageProps) => {
+  const { user } = props;
 
-  // Handle use error and loading state
-  if (isError) return <div>failed to load</div>
-  if (isLoading) return <div>loading...</div>
+  const [items, setItems] = useState(props.items);
+  const [itemCount, setItemCount] = useState(props.items.length);
+  const [loadingItems, setLoadingItems] = useState(false);
 
-  // Setup itemCount and incrementBy state
-  // const [itemCount, setItemCount] = useState(10);
-  // const [incrementBy, setIncrementBy] = useState(10);
+  const renderNoItems = () => <h3 className='text-2xl p-3 bg-amber-200 font-extrabold text-amber-500 rounded-xl w-full shadow-inner text-center'>No posts</h3>;
 
+  const renderItemControls = () => {
+    return (
+      <div className='text-xl flex items-center justify-between h-16 py-3 px-6 rounded-xl w-full shadow-inner bg-indigo-100 text-indigo-500 relative'>
+        <p><span className='font-bold text-slate-50 bg-indigo-500 px-2 py-1 rounded-lg'>{itemCount}</span> latest posts</p>
+        <span className={loadingItems ? 'text-3xl absolute left-1/2 animate-spin opacity-100 duration-300 ease-in-out' : 'opacity-0 animate-none'}>🌀</span>
+        <div className='flex items-center'>
+          <p className='mr-2'>Load more</p>
+          <button onClick={() => setLoadingItems(!loadingItems)} className='bg-indigo-300 px-3 py-1 rounded-l-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75'>15</button>
+          <button className='bg-indigo-300 px-3 py-1 mx-0.5 shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75'>30</button>
+          <button className='bg-indigo-300 px-3 py-1 rounded-r-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75'>All</button>
+        </div>
+      </div>
+    );
+  }
 
-  // Concretize values
-  const numPosts = user.submitted?.length || 0;
-  const hasPosts = (): boolean => numPosts > 0;
-  // if (numPosts < itemCount) setItemCount(numPosts);
+  const renderItemContent = () => {
+    return (
+      <div>
+        {renderItemControls()}
+      </div>
+    );
+  }
 
-  // useEffect(() => {
-  //   const itemIds = user.submitted as number[];
-  //   const x = getAllItems(itemIds);
-  //   console.log(x);
-  // }, 
-  // [user, isLoading, isError]);
-
-  // const renderIncrementSelectorBar = () => (
-  //   <div className="flex items-baseline">
-  //     <p className="mr-3">Increment by</p>
-  //     <div className="bg-indigo-100 text-indigo-500 font-bold p-1 rounded-full shadow-inner flex space-x-5">
-  //       <button onClick={() => setIncrementBy(10)} className={incrementBy === 10 ? 'bg-indigo-500 text-white rounded-full px-2 py-1' : 'hover:bg-indigo-400 hover:text-white rounded-full px-2 py-1 duration-100'}>10</button>
-  //       <button onClick={() => setIncrementBy(20)} className={incrementBy === 20 ? 'bg-indigo-500 text-white rounded-full px-2 py-1' : 'hover:bg-indigo-400 hover:text-white rounded-full px-2 py-1 duration-100'}>20</button>
-  //       <button onClick={() => setIncrementBy(50)} className={incrementBy === 50 ? 'bg-indigo-500 text-white rounded-full px-2 py-1' : 'hover:bg-indigo-400 hover:text-white rounded-full px-2 py-1 duration-100'}>50</button>
-  //       { numPosts > 100 ? <button onClick={() => setIncrementBy(100)} className={incrementBy === 100 ? 'bg-indigo-500 text-white rounded-full px-2 py-1' : 'hover:bg-indigo-400 hover:text-white rounded-full px-2 py-1 duration-100'}>100</button> : null }
-  //     </div>
-  //   </div>
-  // );
-
-
-  // const renderItems = () => {
-  //   const itemIds = user.submitted as number[];
-  //   const items =  await getAllItems(itemIds);
-  //   console.log(items);
-    
-  //   return (
-  //     <p>items</p>
-  //   );
-  // }
-
+  console.log(props)
   return (
     <Container>
-      <div className="space-y-8 max-w-full">
+      <div className="space-y-6 max-w-full">
         <UserCircleAndName id={user.id} />
         <UserInfo 
           about={user.about}
           created={user.created}
           karma={user.karma}
-          numPosts={numPosts} 
-        />       
-
-        {/* <div className="text-xl flex items-center justify-between">
-          <p>
-            <span className="bg-indigo-100 text-indigo-500 font-bold px-2 py-1 rounded-lg shadow-inner">{itemCount}</span> most recent posts:
-          </p>
-
-          {numPosts >= 10 ? renderIncrementSelectorBar() : null }
-        </div> */}
-
-        {/* Items go here */}
-        {/* {hasPosts() ? await renderItems() : null} */}
-
-        {/* {numPosts > 10 ? 
-          (
-            <button 
-              className="shadow hover:shadow-lg px-3 py-1 text-indigo-500 w-full text-xl font-extrabold bg-indigo-100 border-indigo-500 border-2 rounded-xl hover:bg-indigo-500 hover:text-white duration-100 ease-in-out"
-              onClick={() => console.log(itemCount)}
-            >
-              Show next {incrementBy} posts
-            </button>
-          ) : null} */}
-
+          numPosts={user.submitted?.length || 0} 
+        />  
+        {user.submitted && user.submitted.length > 0 ? renderItemContent() : renderNoItems()}
       </div>
     </Container>
   );
 }
 
 export default UserPage;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { params } = context;
+  const userId = params!.id;
+  
+  const { data, status } = await axios.get(`/user/${userId}.json`);
+
+  if (!data || status !== 200) {
+    return {
+      notFound: true
+    }
+  }
+
+  const user: UserModel = data;
+  let items = [] as ItemModel[];
+
+  if (user.submitted && user.submitted.length > 0) {
+    const initialItemCount = user.submitted.length < 15 ? user.submitted.length : 15;
+    const itemIds = user.submitted.slice(0, initialItemCount);
+
+    const requests = itemIds.map(id => axios.get(`/item/${id}.json`));
+    const responses = await Promise.all(requests);
+
+    items = responses.map(response => response.data);
+
+  }
+
+  return {
+    props: {
+      user, 
+      items
+    }
+  }
+}
