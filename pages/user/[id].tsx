@@ -32,6 +32,19 @@ const UserPage = (props: UserPageProps) => {
     loadItems();
   }, [itemCount]);
 
+  const renderLoadMoreItemsButton = () => {
+    const n = 15;
+
+    return(
+      <button 
+        className="mt-3 tracking-wide shadow hover:shadow-lg px-3 py-2 text-indigo-500 w-full text-xl font-extrabold bg-indigo-100 border-indigo-500 border-2 rounded-xl hover:bg-indigo-500 hover:text-white duration-100 ease-in-out"
+        onClick={() => setItemCount(itemCount + n)}
+      >
+        Show next {n} posts
+      </button>
+    );
+  }
+
   const renderSummaryOfItems = () => {
     if (itemCount !== user.submitted!.length) return null;
 
@@ -122,6 +135,7 @@ const UserPage = (props: UserPageProps) => {
         {renderItemControls()}
         {renderSummaryOfItems()}
         {renderItems()}
+        {renderLoadMoreItemsButton()}
       </div>
     );
   }
