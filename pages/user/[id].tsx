@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import React, { useState } from 'react';
+import Item from '../../components/item/item';
 import Container from '../../components/structure/container';
-import User from '../../components/user/user';
 import UserCircleAndName from '../../components/user/userCircleAndName';
 import UserInfo from '../../components/user/userInfo';
 import { ItemModel, UserModel } from '../../models';
@@ -25,21 +25,33 @@ const UserPage = (props: UserPageProps) => {
     return (
       <div className='text-xl flex items-center justify-between h-16 py-3 px-6 rounded-xl w-full shadow-inner bg-indigo-100 text-indigo-500 relative'>
         <p><span className='font-bold text-slate-50 bg-indigo-500 px-2 py-1 rounded-lg'>{itemCount}</span> latest posts</p>
-        <span className={loadingItems ? 'text-3xl absolute left-1/2 animate-spin opacity-100 duration-300 ease-in-out' : 'opacity-0 animate-none'}>🌀</span>
-        <div className='flex items-center'>
-          <p className='mr-2'>Load more</p>
-          <button onClick={() => setLoadingItems(!loadingItems)} className='bg-indigo-300 px-3 py-1 rounded-l-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75'>15</button>
-          <button className='bg-indigo-300 px-3 py-1 mx-0.5 shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75'>30</button>
-          <button className='bg-indigo-300 px-3 py-1 rounded-r-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75'>All</button>
-        </div>
+        {user.submitted!.length > 15 ? 
+          (<>
+              <span className={loadingItems ? 'text-3xl absolute left-1/2 animate-spin opacity-100 duration-300 ease-in-out' : 'opacity-0 animate-none'}>🌀</span>
+              <div className='flex items-center'>
+                <p className='mr-2'>Load more</p>
+                <button className='bg-indigo-300 px-3 py-1 rounded-l-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75'>15</button>
+                <button className='bg-indigo-300 px-3 py-1 mx-0.5 shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75'>30</button>
+                <button className='bg-indigo-300 px-3 py-1 rounded-r-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75'>All</button>
+              </div>
+          </>) : null}
       </div>
     );
   }
+
+  const renderItems = () => (
+    <div className='mt-6 space-y-3'>
+      {items.map((item, index) => (
+        <Item {...item} key={index} />
+      ))}
+    </div>
+  );
 
   const renderItemContent = () => {
     return (
       <div>
         {renderItemControls()}
+        {renderItems()}
       </div>
     );
   }
@@ -92,7 +104,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       user, 
-      items
+      items,
+      key: user.id
     }
   }
 }
