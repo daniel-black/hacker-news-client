@@ -32,6 +32,39 @@ const UserPage = (props: UserPageProps) => {
     loadItems();
   }, [itemCount]);
 
+  const renderSummaryOfItems = () => {
+    if (itemCount !== user.submitted!.length) return null;
+
+    const numStories = items.filter(i => i.type === 'story').length;
+    const numComments = items.filter(i => i.type === 'comment').length;
+    const numPolls = items.filter(i => i.type === 'poll').length;
+    const numJobs = items.filter(i => i.type === 'job').length;
+    
+    const realData = (
+      <>
+        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-emerald-100 text-emerald-500'><span className='absolute font-mono top-2 left-2'>Stories</span><span className='font-extrabold text-7xl'>{numStories}</span></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-pink-100 text-pink-500'><span className='absolute font-mono top-2 left-2'>Comments</span><span className='font-extrabold text-7xl'>{numComments}</span></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-purple-100 text-purple-500'><span className='absolute font-mono top-2 left-2'>Polls</span><span className='font-extrabold text-7xl'>{numPolls}</span></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-sky-100 text-sky-500'><span className='absolute font-mono top-2 left-2'>Jobs</span><span className='font-extrabold text-7xl'>{numJobs}</span></div>
+      </>
+    );
+
+    const placeHolderStructure = (
+      <>
+        <div className='animate-pulse p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-emerald-100'><div className='h-4 w-[20%] bg-emerald-400 rounded-full'></div><div className='rounded-xl bg-emerald-400 h-4 ml-8 w-[50%]'></div><div className='rounded-xl bg-emerald-400 h-4 ml-4 w-[80%]'></div><div className='rounded-xl bg-emerald-400 h-4 ml-4 w-[70%]'></div></div>
+        <div className='animate-pulse p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-pink-100'><div className='h-4 w-[20%] bg-pink-400 rounded-full'></div><div className='rounded-xl bg-pink-500 h-4 ml-8 w-[50%]'></div><div className='rounded-xl bg-pink-500 h-4 ml-4 w-[80%]'></div><div className='rounded-xl bg-pink-500 h-4 ml-4 w-[70%]'></div></div>
+        <div className='animate-pulse p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-purple-100'><div className='h-4 w-[20%] bg-purple-400 rounded-full'></div><div className='rounded-xl bg-purple-400 h-4 ml-8 w-[50%]'></div><div className='rounded-xl bg-purple-400 h-4 ml-4 w-[80%]'></div><div className='rounded-xl bg-purple-400 h-4 ml-4 w-[70%]'></div></div>
+        <div className='animate-pulse p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-sky-100'><div className='h-4 w-[20%] bg-sky-400 rounded-full'></div><div className='rounded-xl bg-sky-400 h-4 ml-8 w-[50%]'></div><div className='rounded-xl bg-sky-400 h-4 ml-4 w-[80%]'></div><div className='rounded-xl bg-sky-400 h-4 ml-4 w-[70%]'></div></div>
+      </>
+    );
+
+    return (
+      <div className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3'>
+        {loadingItems ? placeHolderStructure : realData}
+      </div>
+    );
+  }
+
   const renderNoItems = () => <h3 className='text-2xl p-3 bg-amber-200 font-extrabold text-amber-500 rounded-xl w-full shadow-inner text-center'>No posts</h3>;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
@@ -44,7 +77,7 @@ const UserPage = (props: UserPageProps) => {
   const renderItemControls = () => {
     return (
       <div className='text-xl flex items-center justify-between h-16 py-3 px-6 rounded-xl w-full shadow-inner bg-indigo-100 text-indigo-500 relative'>
-        <p><span className='font-bold text-slate-50 bg-indigo-500 px-2 py-1 rounded-lg'>{itemCount}</span> latest posts</p>
+        <p><span className='font-bold text-slate-50 bg-indigo-500 px-2 py-1 rounded-lg'>{itemCount}</span> {itemCount === user.submitted!.length ? 'total' : 'latest'} posts</p>
         {user.submitted!.length > 15 ? 
           (<>
               <span className={loadingItems ? 'text-3xl absolute left-1/2 animate-spin opacity-100 duration-300 ease-in-out' : 'opacity-0 animate-none'}>🌀</span>
@@ -71,6 +104,7 @@ const UserPage = (props: UserPageProps) => {
     return (
       <div>
         {renderItemControls()}
+        {renderSummaryOfItems()}
         {renderItems()}
       </div>
     );
