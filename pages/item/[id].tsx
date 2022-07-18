@@ -1,10 +1,10 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { ItemModel } from "../../models";
-import Item from "../../components/item";
+import Item from "../../components/item/item";
 import axios from 'axios';
 import useSWR from "swr";
-import Container from "../../components/container";
+import Container from "../../components/structure/container";
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 

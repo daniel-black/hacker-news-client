@@ -1,4 +1,4 @@
-import { UserModel } from "../models"
+import { UserModel } from "../../models"
 
 const User = (props: UserModel) => {
   return (

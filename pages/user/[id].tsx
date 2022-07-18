@@ -1,13 +1,13 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import Container from "../../components/container";
-import UserItem from "../../components/userItem";
+import Container from "../../components/structure/container";
+import UserItem from "../../components/user/userItem";
 import useUser from "../../hooks/useUser";
 import { ItemModel, UserModel } from "../../models";
 import { getAllItems, getItem } from "../../utils/hackerNewsCalls";
 import { useState } from "react";
-import UserInfo from "../../components/userInfo";
-import UserCircleAndName from "../../components/userCircleAndName";
+import UserInfo from "../../components/user/userInfo";
+import UserCircleAndName from "../../components/user/userCircleAndName";
 import { useEffect } from "react";
 
 const UserPage: NextPage = () => {

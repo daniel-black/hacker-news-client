@@ -1,4 +1,4 @@
-import { ItemModel } from "../models";
+import { ItemModel } from "../../models";
 import Link from "next/link";
 import ItemTitle from "./itemTitle";
 
@@ -8,10 +8,10 @@ const Item = (props: ItemModelProps) => {
   const { by, id, title, url, score, index, time } = props;
 
   return (
-    <div className={`bg-slate-200 py-3 px-6 rounded-2xl shadow border-l-4 border border-indigo-500`}>
+    <div className={`bg-slate-200 py-1.5 sm:py-3 px-3 sm:px-6 rounded-2xl shadow border-l-4 border border-indigo-500`}>
       <ItemTitle id={id} title={title} url={url} />
       <div className="mt-1 flex items-baseline">
-        <p className="font-mono mr-2 text-slate-500">🔼{score}</p>
+        <p className="font-mono mr-3 text-slate-500">🔼 {score}</p>
         <Link href={`/user/${by}`}>
           <a className="text-indigo-500">
             @{by}
@@ -20,7 +20,7 @@ const Item = (props: ItemModelProps) => {
       </div>
       <div className="flex justify-between items-center">
         <span className="block text-slate-500">
-          ❇️{new Date(time * 1000).toLocaleString(
+          ❇️ {new Date(time * 1000).toLocaleString(
             'en-us', 
             { year: 'numeric', month:'2-digit', day: 'numeric', hour: 'numeric', minute: '2-digit' }
           )}

@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
-import Container from "../../components/container";
-import Item from "../../components/item";
+import Container from "../../components/structure/container";
+import Item from "../../components/item/item";
 import { StoryType, ItemModel } from "../../models";
 import { getXStories } from "../../utils/hackerNewsCalls";
 import { useState, useEffect } from 'react';
