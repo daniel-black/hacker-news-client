@@ -5,7 +5,17 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      animation: {
+        'loading': 'loading 1s linear infinite',
+      },
+      keyframes: {
+        loading: {
+          '0%': { transform: 'rotate(360deg)' },
+          '100%': { transform: 'rotate(0deg)' },
+        }
+      },
+    },
   },
   plugins: [],
 }

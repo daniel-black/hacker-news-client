@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import Item from '../../components/item/item';
 import Container from '../../components/structure/container';
@@ -21,6 +22,7 @@ const UserPage = (props: UserPageProps) => {
 
   useEffect(() => {
     async function loadItems() {
+      if(!user.submitted) return;
       const itemIds = user.submitted!.slice(items.length, itemCount);
       const requests = itemIds.map(id => axios.get(`/item/${id}.json`));
       const responses = await Promise.all(requests);
@@ -70,21 +72,21 @@ const UserPage = (props: UserPageProps) => {
     
     const realData = (
       <>
-        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-emerald-100 text-emerald-500'><span className='absolute font-mono top-2 left-2'>Stories</span><span className='font-extrabold text-7xl'>{stories.length}</span></div>
-        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-orange-100 text-orange-500'><span className='absolute font-mono top-2 left-2'>Ask HN</span><span className='font-extrabold text-7xl'>{askHN.length}</span></div>
-        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-red-100 text-red-500'><span className='absolute font-mono top-2 left-2'>Show HN</span><span className='font-extrabold text-7xl'>{showHN.length}</span></div>
-        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-pink-100 text-pink-500'><span className='absolute font-mono top-2 left-2'>Comments</span><span className='font-extrabold text-7xl'>{comments.length}</span></div>
-        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-purple-100 text-purple-500'><span className='absolute font-mono top-2 left-2'>Polls</span><span className='font-extrabold text-7xl'>{polls.length}</span></div>
-        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-sky-100 text-sky-500'><span className='absolute font-mono top-2 left-2'>Jobs</span><span className='font-extrabold text-7xl'>{jobs.length}</span></div>
+        <div className='hover:scale-105 hover:shadow-lg hover:z-10 ease-in-out duration-150 md:col-span-2 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-emerald-100 text-emerald-500'><span className='absolute font-mono text-xl font-semibold top-2 left-3'>Stories</span><span className='font-extrabold text-7xl'>{stories.length}</span></div>
+        <div className='hover:scale-105 hover:shadow-lg hover:z-10 ease-in-out duration-150 md:col-span-2 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-pink-100 text-pink-500'><span className='absolute font-mono text-xl font-semibold top-2 left-3'>Comments</span><span className='font-extrabold text-7xl'>{comments.length}</span></div>
+        <div className='hover:scale-105 hover:shadow-lg hover:z-10 ease-in-out duration-150 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-orange-100 text-orange-500'><span className='absolute font-mono text-xl font-semibold top-2 left-3'>Ask HN</span><span className='font-extrabold text-7xl'>{askHN.length}</span></div>
+        <div className='hover:scale-105 hover:shadow-lg hover:z-10 ease-in-out duration-150 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-red-100 text-red-500'><span className='absolute font-mono text-xl font-semibold top-2 left-3'>Show HN</span><span className='font-extrabold text-7xl'>{showHN.length}</span></div>
+        <div className='hover:scale-105 hover:shadow-lg hover:z-10 ease-in-out duration-150 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-sky-100 text-sky-500'><span className='absolute font-mono text-xl font-semibold top-2 left-3'>Jobs</span><span className='font-extrabold text-7xl'>{jobs.length}</span></div>
+        <div className='hover:scale-105 hover:shadow-lg hover:z-10 ease-in-out duration-150 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-purple-100 text-purple-500'><span className='absolute font-mono text-xl font-semibold top-2 left-3'>Polls</span><span className='font-extrabold text-7xl'>{polls.length}</span></div>
       </>
     );
 
     const placeHolderStructure = (
       <>
-        <div className='animate-pulse p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-emerald-100'><div className='h-4 w-[20%] bg-emerald-400 rounded-full'></div><div className='rounded-xl bg-emerald-400 h-4 ml-8 w-[50%]'></div><div className='rounded-xl bg-emerald-400 h-4 ml-4 w-[80%]'></div><div className='rounded-xl bg-emerald-400 h-4 ml-4 w-[70%]'></div></div>
-        <div className='animate-pulse p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-pink-100'><div className='h-4 w-[20%] bg-pink-400 rounded-full'></div><div className='rounded-xl bg-pink-500 h-4 ml-8 w-[50%]'></div><div className='rounded-xl bg-pink-500 h-4 ml-4 w-[80%]'></div><div className='rounded-xl bg-pink-500 h-4 ml-4 w-[70%]'></div></div>
-        <div className='animate-pulse p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-purple-100'><div className='h-4 w-[20%] bg-purple-400 rounded-full'></div><div className='rounded-xl bg-purple-400 h-4 ml-8 w-[50%]'></div><div className='rounded-xl bg-purple-400 h-4 ml-4 w-[80%]'></div><div className='rounded-xl bg-purple-400 h-4 ml-4 w-[70%]'></div></div>
-        <div className='animate-pulse p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-sky-100'><div className='h-4 w-[20%] bg-sky-400 rounded-full'></div><div className='rounded-xl bg-sky-400 h-4 ml-8 w-[50%]'></div><div className='rounded-xl bg-sky-400 h-4 ml-4 w-[80%]'></div><div className='rounded-xl bg-sky-400 h-4 ml-4 w-[70%]'></div></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-emerald-100'><div className='animate-pulse h-4 w-[20%] bg-emerald-400 rounded-full'></div><div className='animate-pulse rounded-xl bg-emerald-400 h-4 ml-8 w-[50%]'></div><div className='animate-pulse rounded-xl bg-emerald-400 h-4 ml-4 w-[80%]'></div><div className='animate-pulse rounded-xl bg-emerald-400 h-4 ml-4 w-[70%]'></div></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-pink-100'><div className='animate-pulse h-4 w-[20%] bg-pink-400 rounded-full'></div><div className='animate-pulse rounded-xl bg-pink-500 h-4 ml-8 w-[50%]'></div><div className='animate-pulse rounded-xl bg-pink-500 h-4 ml-4 w-[80%]'></div><div className='animate-pulse rounded-xl bg-pink-500 h-4 ml-4 w-[70%]'></div></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-purple-100'><div className='animate-pulse h-4 w-[20%] bg-purple-400 rounded-full'></div><div className='animate-pulse rounded-xl bg-purple-400 h-4 ml-8 w-[50%]'></div><div className='animate-pulse rounded-xl bg-purple-400 h-4 ml-4 w-[80%]'></div><div className='animate-pulse rounded-xl bg-purple-400 h-4 ml-4 w-[70%]'></div></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-sky-100'><div className='animate-pulse h-4 w-[20%] bg-sky-400 rounded-full'></div><div className='animate-pulse rounded-xl bg-sky-400 h-4 ml-8 w-[50%]'></div><div className='animate-pulse rounded-xl bg-sky-400 h-4 ml-4 w-[80%]'></div><div className='animate-pulse rounded-xl bg-sky-400 h-4 ml-4 w-[70%]'></div></div>
       </>
     );
 
@@ -95,7 +97,7 @@ const UserPage = (props: UserPageProps) => {
     );
   }
 
-  const renderNoItems = () => <h3 className='text-2xl p-3 bg-amber-200 font-extrabold text-amber-500 rounded-xl w-full shadow-inner text-center'>No posts</h3>;
+  const renderNoItems = () => <h3 className='text-2xl p-3 bg-amber-200 font-extrabold text-amber-500 rounded-xl w-full shadow-inner text-center'>No posts yet</h3>;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     const increment = +e.currentTarget.value;
@@ -107,7 +109,7 @@ const UserPage = (props: UserPageProps) => {
   const renderItemControls = () => {
     return (
       <div className='relative'>
-        <span className={`${loadingItems ? ' animate-spin opacity-100' : 'opacity-0 animate-none'} text-3xl sm:text-4xl md:5xl absolute left-1/2 top-2 md:top-3 z-10 duration-300 ease-in-out my-auto`}>🌀</span>
+        <span className={`${loadingItems ? ' animate-loading opacity-100' : 'opacity-0 animate-none'} text-3xl sm:text-4xl md:5xl absolute left-1/2 top-2 md:top-3 z-10 duration-300 ease-in-out my-auto`}>🌀</span>
         
         <div className={`${loadingItems ? 'blur-sm -z-10 ease-in-out duration-75' : ''} text-sm md:text-xl flex items-center justify-between h-12 md:h-16 py-1 md:py-3 px-2 md:px-6 rounded-xl w-full shadow-inner bg-indigo-100 text-indigo-500`}>
         <p><span className='font-bold text-slate-50 bg-indigo-500 px-1.5 md:px-2 py-1 rounded-lg'>{itemCount}</span> {itemCount === user.submitted!.length ? 'total' : 'latest'} posts</p>
@@ -135,16 +137,27 @@ const UserPage = (props: UserPageProps) => {
 
   const renderItemContent = () => {
     return (
-      <div>
-        {renderItemControls()}
-        {renderSummaryOfItems()}
-        {renderItems()}
-        {renderLoadMoreItemsButton()}
-      </div>
+      <>
+        <Head>
+          <title>{user.id}</title>
+        </Head>
+        
+        <div>
+          {renderItemControls()}
+          {renderSummaryOfItems()}
+          {renderItems()}
+          {renderLoadMoreItemsButton()}
+        </div>
+      </>
     );
   }
 
-  console.log(props)
+  // const getGradientColors = () => {
+  //   const idHash = sha1(user.id);
+  //   const colors = `from-[#${idHash.slice(0, 6)}] via-[#${idHash.slice(6, 12)}] to-[#${idHash.slice(12, 18)}]`;
+  //   console.log(colors);
+  // };
+
   return (
     <Container>
       <div className="space-y-6 max-w-full">
@@ -186,7 +199,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const responses = await Promise.all(requests);
 
     items = responses.map(response => response.data);
-
   }
 
   return {
