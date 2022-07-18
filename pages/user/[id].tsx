@@ -35,17 +35,30 @@ const UserPage = (props: UserPageProps) => {
   const renderSummaryOfItems = () => {
     if (itemCount !== user.submitted!.length) return null;
 
-    const numStories = items.filter(i => i.type === 'story').length;
-    const numComments = items.filter(i => i.type === 'comment').length;
-    const numPolls = items.filter(i => i.type === 'poll').length;
-    const numJobs = items.filter(i => i.type === 'job').length;
+    const stories = [];
+    const askHN = [];
+    const showHN = [];
+    const comments = [];
+    const polls = [];
+    const jobs = [];
+
+    items.forEach((item) => {
+      if (item.title?.startsWith('Ask HN:')) askHN.push(item);
+      if (item.title?.startsWith('Show HN:')) askHN.push(item);
+      if (item.type === 'story') stories.push(item);
+      if (item.type === 'comment') comments.push(item);
+      if (item.type === 'poll') polls.push(item);
+      if (item.type === 'job') jobs.push(item);
+    });
     
     const realData = (
       <>
-        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-emerald-100 text-emerald-500'><span className='absolute font-mono top-2 left-2'>Stories</span><span className='font-extrabold text-7xl'>{numStories}</span></div>
-        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-pink-100 text-pink-500'><span className='absolute font-mono top-2 left-2'>Comments</span><span className='font-extrabold text-7xl'>{numComments}</span></div>
-        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-purple-100 text-purple-500'><span className='absolute font-mono top-2 left-2'>Polls</span><span className='font-extrabold text-7xl'>{numPolls}</span></div>
-        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-sky-100 text-sky-500'><span className='absolute font-mono top-2 left-2'>Jobs</span><span className='font-extrabold text-7xl'>{numJobs}</span></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-emerald-100 text-emerald-500'><span className='absolute font-mono top-2 left-2'>Stories</span><span className='font-extrabold text-7xl'>{stories.length}</span></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-orange-100 text-orange-500'><span className='absolute font-mono top-2 left-2'>Ask HN</span><span className='font-extrabold text-7xl'>{askHN.length}</span></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-red-100 text-red-500'><span className='absolute font-mono top-2 left-2'>Show HN</span><span className='font-extrabold text-7xl'>{showHN.length}</span></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-pink-100 text-pink-500'><span className='absolute font-mono top-2 left-2'>Comments</span><span className='font-extrabold text-7xl'>{comments.length}</span></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-purple-100 text-purple-500'><span className='absolute font-mono top-2 left-2'>Polls</span><span className='font-extrabold text-7xl'>{polls.length}</span></div>
+        <div className='p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-sky-100 text-sky-500'><span className='absolute font-mono top-2 left-2'>Jobs</span><span className='font-extrabold text-7xl'>{jobs.length}</span></div>
       </>
     );
 
@@ -76,18 +89,21 @@ const UserPage = (props: UserPageProps) => {
 
   const renderItemControls = () => {
     return (
-      <div className='text-xl flex items-center justify-between h-16 py-3 px-6 rounded-xl w-full shadow-inner bg-indigo-100 text-indigo-500 relative'>
-        <p><span className='font-bold text-slate-50 bg-indigo-500 px-2 py-1 rounded-lg'>{itemCount}</span> {itemCount === user.submitted!.length ? 'total' : 'latest'} posts</p>
+      <div className='relative'>
+        <span className={`${loadingItems ? ' animate-spin opacity-100' : 'opacity-0 animate-none'} text-3xl sm:text-4xl md:5xl absolute left-1/2 top-2 md:top-3 z-10 duration-300 ease-in-out my-auto`}>🌀</span>
+        
+        <div className={`${loadingItems ? 'blur-sm -z-10 ease-in-out duration-75' : ''} text-sm md:text-xl flex items-center justify-between h-12 md:h-16 py-1 md:py-3 px-2 md:px-6 rounded-xl w-full shadow-inner bg-indigo-100 text-indigo-500`}>
+        <p><span className='font-bold text-slate-50 bg-indigo-500 px-1.5 md:px-2 py-1 rounded-lg'>{itemCount}</span> {itemCount === user.submitted!.length ? 'total' : 'latest'} posts</p>
         {user.submitted!.length > 15 ? 
           (<>
-              <span className={loadingItems ? 'text-3xl absolute left-1/2 animate-spin opacity-100 duration-300 ease-in-out' : 'opacity-0 animate-none'}>🌀</span>
-              <div className='flex items-center'>
-                <p className='mr-2'>Load more</p>
-                <button value={15} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-3 py-1 rounded-l-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>15</button>
-                <button value={30} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-3 py-1 mx-0.5 shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>30</button>
-                <button value={user.submitted!.length - itemCount} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-3 py-1 rounded-r-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>All</button>
-              </div>
+            <div className='flex items-center'>
+              <p className='mr-2'>Load more</p>
+              <button value={15} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-2 md:px-3 py-1 rounded-l-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>15</button>
+              <button value={30} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-2 md:px-3 py-1 mx-0.5 shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>30</button>
+              <button value={user.submitted!.length - itemCount} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-2 md:px-3 py-1 rounded-r-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>All</button>
+            </div>
           </>) : null}
+      </div>
       </div>
     );
   }
