@@ -7,7 +7,7 @@ const User = (props: UserModel) => {
       <p>About: {props.about}</p>
       <p>Joined: {new Date(props.created * 1000).toLocaleDateString()}</p>
       <p>Karma: {props.karma}</p>
-      <p>Posts: [{props.submitted?.toString()}]</p>
+      <p>Posts: {props.submitted?.length}</p>
     </div>
   );
 }

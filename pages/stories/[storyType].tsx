@@ -10,11 +10,10 @@ type StoriesProps = {
   posts: ItemModel[],
   storyType: StoryType,
   initialStoryCount: number,
-  key: StoryType
 };
 
 const Stories = (props: StoriesProps) => {
-  const { posts, storyType, initialStoryCount, key } = props;
+  const { posts, storyType, initialStoryCount } = props;
 
   const [items, setItems] = useState(posts);
   const [itemsOnPage, setItemsOnPage] = useState(initialStoryCount);
