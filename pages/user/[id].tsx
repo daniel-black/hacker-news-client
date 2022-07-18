@@ -21,6 +21,12 @@ const UserPage = (props: UserPageProps) => {
 
   const renderNoItems = () => <h3 className='text-2xl p-3 bg-amber-200 font-extrabold text-amber-500 rounded-xl w-full shadow-inner text-center'>No posts</h3>;
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    const increment = +e.currentTarget.value;
+    if (increment + itemCount > user.submitted!.length) return;
+    setItemCount(increment + itemCount);
+  }
+
   const renderItemControls = () => {
     return (
       <div className='text-xl flex items-center justify-between h-16 py-3 px-6 rounded-xl w-full shadow-inner bg-indigo-100 text-indigo-500 relative'>
@@ -30,9 +36,9 @@ const UserPage = (props: UserPageProps) => {
               <span className={loadingItems ? 'text-3xl absolute left-1/2 animate-spin opacity-100 duration-300 ease-in-out' : 'opacity-0 animate-none'}>🌀</span>
               <div className='flex items-center'>
                 <p className='mr-2'>Load more</p>
-                <button className='bg-indigo-300 px-3 py-1 rounded-l-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75'>15</button>
-                <button className='bg-indigo-300 px-3 py-1 mx-0.5 shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75'>30</button>
-                <button className='bg-indigo-300 px-3 py-1 rounded-r-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75'>All</button>
+                <button value={15} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-3 py-1 rounded-l-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>15</button>
+                <button value={30} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-3 py-1 mx-0.5 shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>30</button>
+                <button value={user.submitted!.length - itemCount} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-3 py-1 rounded-r-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>All</button>
               </div>
           </>) : null}
       </div>
