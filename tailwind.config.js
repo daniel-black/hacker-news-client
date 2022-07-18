@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        'loading': 'loading 1s linear infinite'
+        'loading': 'loading 1s linear infinite',
       },
       keyframes: {
         loading: {
