@@ -7,3 +7,19 @@
     @apply bg-slate-300 px-2 sm:px-3 md:px-4 py-1 rounded-full shadow;
   }
 }
+
+@layer components {
+  .tile {
+    @apply hover:scale-[103%] hover:shadow-lg hover:z-10 ease-in-out duration-150 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative;
+  }
+}
+
+@layer utilities {
+  .font-mega {
+    @apply font-extrabold text-7xl;
+  }
+
+  .tileTitle {
+    @apply absolute font-mono text-xl font-semibold top-2 left-3;
+  }
+}
