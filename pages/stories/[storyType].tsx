@@ -3,17 +3,36 @@ import Container from "../../components/container";
 import Item from "../../components/item";
 import { StoryType, ItemModel } from "../../models";
 import { getXStories } from "../../utils/hackerNewsCalls";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from '../../utils/axios';
 
 type StoriesProps = {
   posts: ItemModel[],
   storyType: StoryType,
-  initialStoryCount: number
+  initialStoryCount: number,
+  key: StoryType
 };
 
 const Stories = (props: StoriesProps) => {
-  const { posts, storyType, initialStoryCount } = props;
+  const { posts, storyType, initialStoryCount, key } = props;
+
+  const [items, setItems] = useState(posts);
   const [itemsOnPage, setItemsOnPage] = useState(initialStoryCount);
+
+  useEffect(() => {
+    async function getMoreItems() {
+      const { data } = await axios.get(`/${storyType}stories.json?limitToFirst=${itemsOnPage}&orderBy="$key"`);
+      const itemIds: number[] = data;
+
+      const requests = itemIds.map(id => axios.get(`/item/${id}.json`));
+      const responses = await Promise.all(requests);
+
+      const newItems: ItemModel[] = responses.map(response => response.data)
+
+      setItems(newItems);
+    }
+    getMoreItems();
+  }, [itemsOnPage]);
 
   console.dir(posts);
 
@@ -28,9 +47,9 @@ const Stories = (props: StoriesProps) => {
     <Container>
       <div className="space-y-4">
         <h2 className="font-mono">{getHeadingWording()}</h2>
-        {posts.map((post, index) => <Item {...post} index={+index + 1} key={index} />)}
+        {items.map((post, index) => <Item {...post} index={+index + 1} key={index} />)}
         <button 
-              className="shadow hover:shadow-lg px-3 py-1 text-indigo-500 w-full text-xl font-extrabold bg-indigo-100 border-indigo-500 border-2 rounded-xl hover:bg-indigo-500 hover:text-white duration-100 ease-in-out"
+              className="tracking-wide shadow hover:shadow-lg px-3 py-2 text-indigo-500 w-full text-xl font-extrabold bg-indigo-100 border-indigo-500 border-2 rounded-xl hover:bg-indigo-500 hover:text-white duration-100 ease-in-out"
               onClick={() => setItemsOnPage(itemsOnPage + initialStoryCount)}
             >
               Show next {initialStoryCount} posts
@@ -54,7 +73,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async (context: GetStaticPropsContext) => {
   const { params } = context;
   const storyType = params?.storyType as StoryType;
-  const initialStoryCount = 20;
+  const initialStoryCount = 15;
 
   if (typeof storyType !== 'string') {
     return {
@@ -65,7 +84,7 @@ export const getStaticProps: GetStaticProps = async (context: GetStaticPropsCont
   const posts = await getXStories(storyType, initialStoryCount) as ItemModel[];
   
   return {
-    props: { posts, storyType, initialStoryCount }
+    props: { posts, storyType, initialStoryCount, key: storyType }
   };
 }
 

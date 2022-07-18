@@ -7,15 +7,6 @@ type ItemTitleProps = {
 };
 
 const ItemTitle = ({ id, url, title }: ItemTitleProps) => {
-  const isAskHN = title.startsWith('Ask HN:'); 
-    
-  const renderStoryIndicator = () => {
-    if (isAskHN) {
-      return <span className="flex justify-center items-center bg-slate-200 h-8 w-8 rounded-full mr-2 shadow">❓</span>;
-    }
-
-    
-  }
 
   if (url) {
     return (
@@ -31,7 +22,6 @@ const ItemTitle = ({ id, url, title }: ItemTitleProps) => {
   return (
     <Link href={`/item/${id}`}>
       <span className="flex items-center">
-        {renderStoryIndicator()}
         <a className="text-xl font-bold text-indigo-500 hover:underline">{title}</a>
       </span>
     </Link>
