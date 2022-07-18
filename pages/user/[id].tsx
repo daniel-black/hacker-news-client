@@ -2,9 +2,12 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import Item from '../../components/item/item';
+import TilePlaceholders from '../../components/placeholders/tilePlaceholders';
 import Container from '../../components/structure/container';
+import TileData from '../../components/user/tileData';
 import UserCircleAndName from '../../components/user/userCircleAndName';
 import UserInfo from '../../components/user/userInfo';
+import UserSummaryTile from '../../components/user/userSummaryTile';
 import { ItemModel, UserModel } from '../../models';
 import axios from '../../utils/axios';
 
@@ -72,27 +75,18 @@ const UserPage = (props: UserPageProps) => {
     
     const realData = (
       <>
-        <div className='hover:scale-105 hover:shadow-lg hover:z-10 ease-in-out duration-150 md:col-span-2 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-emerald-100 text-emerald-500'><span className='absolute font-mono text-xl font-semibold top-2 left-3'>Stories</span><span className='font-extrabold text-7xl'>{stories.length}</span></div>
-        <div className='hover:scale-105 hover:shadow-lg hover:z-10 ease-in-out duration-150 md:col-span-2 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-pink-100 text-pink-500'><span className='absolute font-mono text-xl font-semibold top-2 left-3'>Comments</span><span className='font-extrabold text-7xl'>{comments.length}</span></div>
-        <div className='hover:scale-105 hover:shadow-lg hover:z-10 ease-in-out duration-150 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-orange-100 text-orange-500'><span className='absolute font-mono text-xl font-semibold top-2 left-3'>Ask HN</span><span className='font-extrabold text-7xl'>{askHN.length}</span></div>
-        <div className='hover:scale-105 hover:shadow-lg hover:z-10 ease-in-out duration-150 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-red-100 text-red-500'><span className='absolute font-mono text-xl font-semibold top-2 left-3'>Show HN</span><span className='font-extrabold text-7xl'>{showHN.length}</span></div>
-        <div className='hover:scale-105 hover:shadow-lg hover:z-10 ease-in-out duration-150 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-sky-100 text-sky-500'><span className='absolute font-mono text-xl font-semibold top-2 left-3'>Jobs</span><span className='font-extrabold text-7xl'>{jobs.length}</span></div>
-        <div className='hover:scale-105 hover:shadow-lg hover:z-10 ease-in-out duration-150 p-2 rounded-xl shadow h-32 w-auto flex items-center justify-center relative bg-purple-100 text-purple-500'><span className='absolute font-mono text-xl font-semibold top-2 left-3'>Polls</span><span className='font-extrabold text-7xl'>{polls.length}</span></div>
-      </>
-    );
-
-    const placeHolderStructure = (
-      <>
-        <div className='p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-emerald-100'><div className='animate-pulse h-4 w-[20%] bg-emerald-400 rounded-full'></div><div className='animate-pulse rounded-xl bg-emerald-400 h-4 ml-8 w-[50%]'></div><div className='animate-pulse rounded-xl bg-emerald-400 h-4 ml-4 w-[80%]'></div><div className='animate-pulse rounded-xl bg-emerald-400 h-4 ml-4 w-[70%]'></div></div>
-        <div className='p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-pink-100'><div className='animate-pulse h-4 w-[20%] bg-pink-400 rounded-full'></div><div className='animate-pulse rounded-xl bg-pink-500 h-4 ml-8 w-[50%]'></div><div className='animate-pulse rounded-xl bg-pink-500 h-4 ml-4 w-[80%]'></div><div className='animate-pulse rounded-xl bg-pink-500 h-4 ml-4 w-[70%]'></div></div>
-        <div className='p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-purple-100'><div className='animate-pulse h-4 w-[20%] bg-purple-400 rounded-full'></div><div className='animate-pulse rounded-xl bg-purple-400 h-4 ml-8 w-[50%]'></div><div className='animate-pulse rounded-xl bg-purple-400 h-4 ml-4 w-[80%]'></div><div className='animate-pulse rounded-xl bg-purple-400 h-4 ml-4 w-[70%]'></div></div>
-        <div className='p-2 rounded-xl shadow h-32 w-auto space-y-2 bg-sky-100'><div className='animate-pulse h-4 w-[20%] bg-sky-400 rounded-full'></div><div className='animate-pulse rounded-xl bg-sky-400 h-4 ml-8 w-[50%]'></div><div className='animate-pulse rounded-xl bg-sky-400 h-4 ml-4 w-[80%]'></div><div className='animate-pulse rounded-xl bg-sky-400 h-4 ml-4 w-[70%]'></div></div>
+        <div className='tile bg-emerald-100 text-emerald-500 md:col-span-2'><TileData title='Stories' value={stories.length} /></div>
+        <div className='tile bg-pink-100 text-pink-500 md:col-span-2'><TileData title='Comments' value={comments.length} /></div>
+        <div className='tile bg-orange-100 text-orange-500'><TileData title='Ask HN' value={askHN.length} /></div>
+        <div className='tile bg-red-100 text-red-500'><TileData title='Show HN' value={showHN.length} /></div>
+        <div className='tile bg-sky-100 text-sky-500'><TileData title='Jobs' value={jobs.length} /></div>
+        <div className='tile bg-purple-100 text-purple-500'><TileData title='Polls' value={polls.length} /></div>
       </>
     );
 
     return (
       <div className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3'>
-        {loadingItems ? placeHolderStructure : realData}
+        {loadingItems ? <TilePlaceholders /> : realData}
       </div>
     );
   }
