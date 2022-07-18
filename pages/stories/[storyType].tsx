@@ -5,6 +5,7 @@ import { StoryType, ItemModel } from "../../models";
 import { getXStories } from "../../utils/hackerNewsCalls";
 import { useState, useEffect } from 'react';
 import axios from '../../utils/axios';
+import Head from "next/head";
 
 type StoriesProps = {
   posts: ItemModel[],
@@ -44,6 +45,10 @@ const Stories = (props: StoriesProps) => {
 
   return (
     <Container>
+      <Head>
+        <title>{storyType} stories</title>
+      </Head>
+
       <div className="space-y-4">
         <h2 className="font-mono">{getHeadingWording()}</h2>
         {items.map((post, index) => <Item {...post} index={+index + 1} key={index} />)}
