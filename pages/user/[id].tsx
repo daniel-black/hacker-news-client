@@ -33,14 +33,18 @@ const UserPage = (props: UserPageProps) => {
   }, [itemCount]);
 
   const renderLoadMoreItemsButton = () => {
-    const n = 15;
+    if (itemCount === user.submitted!.length) return null;
+
+    const oneLoadFromDone = itemCount < user.submitted!.length && itemCount + 15 > user.submitted!.length;
+    const n = oneLoadFromDone ? user.submitted!.length - itemCount : 15;
 
     return(
       <button 
-        className="mt-3 tracking-wide shadow hover:shadow-lg px-3 py-2 text-indigo-500 w-full text-xl font-extrabold bg-indigo-100 border-indigo-500 border-2 rounded-xl hover:bg-indigo-500 hover:text-white duration-100 ease-in-out"
+        className="group mt-3 tracking-wide shadow hover:shadow-lg px-1 py-2 text-indigo-500 w-full text-xl font-extrabold bg-indigo-100 border-indigo-500 border-2 rounded-xl hover:bg-indigo-500 hover:text-white duration-100 ease-in-out relative"
         onClick={() => setItemCount(itemCount + n)}
       >
-        Show next {n} posts
+        <span>Show next {n} posts</span>
+        <span className='absolute right-2 sm:right-3 font-normal text-xs top-4 sm:top-3 md:top-2 sm:text-md md:text-lg text-indigo-400 group-hover:text-indigo-100'>({itemCount}/{user.submitted!.length})</span>
       </button>
     );
   }
