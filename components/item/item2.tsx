@@ -1,10 +1,9 @@
-import { spawn } from 'child_process';
 import Link from 'next/link';
-import React from 'react'
-import { render } from 'react-dom';
+import React, { useEffect, useState } from 'react'
 import { ItemModel } from '../../models';
+import axios from '../../utils/axios';
 
-type ItemProps = {
+export type ItemProps = {
   id: number,
   by: string,
   time: number,
@@ -13,18 +12,18 @@ type ItemProps = {
   poll?: ItemModel,
   parts?: ItemModel,
   url?: string,
-  parent?: ItemModel,
+  parent?: string,
   descendants?: number,
   kids?: number[],
   dead?: boolean,
   deleted?: boolean,
   text?: string,
   score?: number,
-  index?: number
+  index?: number,
 };
 
 const Item2 = (props: ItemProps) => {
-  const { id, by, time, type, title, url, score } = props;
+  const { id, by, time, type, title, url, score, parent } = props;
 
   const isAskHN = title && title.startsWith('Ask HN:'); 
   const isShowHN = title && title.startsWith('Show HN:'); 
@@ -45,7 +44,11 @@ const Item2 = (props: ItemProps) => {
   }
 
   const renderComment = () => {
-    return <span className='whitespace-normal' dangerouslySetInnerHTML={{__html: props?.text || ''}}></span>
+    return (
+      <div>
+        <div className='whitespace-normal' dangerouslySetInnerHTML={{__html: props?.text || ''}}></div>
+      </div>
+    );
   }
 
   const renderAskHNTitle = () => {
