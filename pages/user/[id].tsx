@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import Item from '../../components/item/item';
+import Item2, { ItemProps } from '../../components/item/item2';
 import TilePlaceholders from '../../components/placeholders/tilePlaceholders';
 import Container from '../../components/structure/container';
 import TileData from '../../components/user/tileData';
@@ -12,7 +12,7 @@ import axios from '../../utils/axios';
 
 type UserPageProps = { 
   user: UserModel,
-  items: ItemModel[]
+  items: ItemProps[]
 };
 
 const UserPage = (props: UserPageProps) => {
@@ -29,7 +29,7 @@ const UserPage = (props: UserPageProps) => {
       const requests = itemIds.map(id => axios.get(`/item/${id}.json`));
       const responses = await Promise.all(requests);
 
-      const newItems: ItemModel[] = responses.map(response => response.data);
+      const newItems: ItemProps[] = responses.map(response => response.data);
       setItems(items.concat(newItems));
       setLoadingItems(false);
     }
@@ -74,12 +74,12 @@ const UserPage = (props: UserPageProps) => {
     
     const realData = (
       <>
-        <div className='tile bg-emerald-100 text-emerald-500 md:col-span-2'><TileData title='Stories' value={stories.length} /></div>
-        <div className='tile bg-pink-100 text-pink-500 md:col-span-2'><TileData title='Comments' value={comments.length} /></div>
-        <div className='tile bg-orange-100 text-orange-500'><TileData title='Ask HN' value={askHN.length} /></div>
-        <div className='tile bg-red-100 text-red-500'><TileData title='Show HN' value={showHN.length} /></div>
-        <div className='tile bg-sky-100 text-sky-500'><TileData title='Jobs' value={jobs.length} /></div>
-        <div className='tile bg-purple-100 text-purple-500'><TileData title='Polls' value={polls.length} /></div>
+        <div className='tile story-base md:col-span-2'><TileData title='Stories' value={stories.length} /></div>
+        <div className='tile comment-base md:col-span-2'><TileData title='Comments' value={comments.length} /></div>
+        <div className='tile ask-hn-base'><TileData title='Ask HN' value={askHN.length} /></div>
+        <div className='tile show-hn-base'><TileData title='Show HN' value={showHN.length} /></div>
+        <div className='tile job-base'><TileData title='Jobs' value={jobs.length} /></div>
+        <div className='tile poll-base'><TileData title='Polls' value={polls.length} /></div>
       </>
     );
 
@@ -90,7 +90,7 @@ const UserPage = (props: UserPageProps) => {
     );
   }
 
-  const renderNoItems = () => <h3 className='text-2xl p-3 bg-amber-200 font-extrabold text-amber-500 rounded-xl w-full shadow-inner text-center'>No posts yet</h3>;
+  const renderNoItems = () => <h3 className='text-2xl p-3 bg-amber-200 font-extrabold text-amber-500 rounded-xl w-full shadow-inner text-center'><span className='animate-bounce inline-block'>👻</span> No posts yet</h3>;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     const increment = +e.currentTarget.value;
@@ -123,7 +123,7 @@ const UserPage = (props: UserPageProps) => {
   const renderItems = () => (
     <div className='mt-6 space-y-3'>
       {items.map((item, index) => (
-        <Item {...item} key={index} />
+        <Item2 {...item} key={index} />
       ))}
     </div>
   );
