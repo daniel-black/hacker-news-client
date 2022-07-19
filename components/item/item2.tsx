@@ -1,5 +1,7 @@
+import { spawn } from 'child_process';
 import Link from 'next/link';
 import React from 'react'
+import { render } from 'react-dom';
 import { ItemModel } from '../../models';
 
 type ItemProps = {
@@ -32,6 +34,10 @@ const Item2 = (props: ItemProps) => {
     return (<div className='index'>{props.index}</div>);
   }
 
+  const renderComment = () => {
+    return <span>{props.text}</span>
+  }
+
   const renderAskHNTitle = () => {
     const colonIndex = title!.indexOf(':');
     const question = title!.substring(colonIndex + 1).trim();
@@ -58,7 +64,7 @@ const Item2 = (props: ItemProps) => {
   }
 
   const renderTitle = () => {
-    if (!title) return null;
+    if (!title) return renderComment();
 
     if (isAskHN) return renderAskHNTitle();
     if (isShowHN) return renderShowHNTitle();
@@ -109,17 +115,35 @@ const Item2 = (props: ItemProps) => {
     return <span>🕑{`${n}${unit}`}</span> 
   }
 
+  const renderScore = () => (score ? <span>🔼{score}</span> : null);
+
+  const renderDiscussionLink = () => {
+    const { kids, descendants } = props;
+
+    if (!descendants || descendants === 0 || !kids || kids.length === 0) return null;
+
+    // Come back to this. Might want to send kid ids to Item page
+    return (<Link href={`/item/${id}`}><a>{descendants} comments</a></Link>);
+  }
+
+  const renderUserId = () => (isAskHN ? null : <Link href={`/user/${by}`}><a>{by}</a></Link>);
+
   return (
     <div className='item-wrapper'>
-      {/* Top row */}
       <div className='truncate flex space-x-2'>
+        {/* Small left column */}
         {renderIndex()}
-        {renderTitle()}
-      </div>
-
-      {/* Secondary meta data stuff */}
-      <div className='flex'>
-        {renderTime()}
+        {/* Big right column */}
+        <div className='text-sm flex flex-col space-x-2 w-full'>
+          {renderTitle()}
+          {/* Bottom row */}
+          <div className='flex justify-between'>
+            {renderTime()}
+            {renderScore()}
+            {renderDiscussionLink()}
+            {renderUserId()}
+          </div>
+        </div>
       </div>
     </div>
   )
