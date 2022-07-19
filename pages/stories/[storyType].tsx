@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import Container from "../../components/structure/container";
 import Item from "../../components/item/item";
+import Item2 from "../../components/item/item2";
 import { StoryType, ItemModel } from "../../models";
 import { getXStories } from "../../utils/hackerNewsCalls";
 import { useState, useEffect } from 'react';
@@ -51,7 +52,7 @@ const Stories = (props: StoriesProps) => {
 
       <div className="space-y-4">
         <h2 className="font-mono">{getHeadingWording()}</h2>
-        {items.map((post, index) => <Item {...post} index={+index + 1} key={index} />)}
+        {items.map((post, index) => <Item2 {...post} index={+index + 1} key={index} />)}
         <button 
               className="tracking-wide shadow hover:shadow-lg px-3 py-2 text-indigo-500 w-full text-xl font-extrabold bg-indigo-100 border-indigo-500 border-2 rounded-xl hover:bg-indigo-500 hover:text-white duration-100 ease-in-out"
               onClick={() => setItemsOnPage(itemsOnPage + initialStoryCount)}
