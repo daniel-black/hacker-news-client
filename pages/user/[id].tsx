@@ -90,7 +90,7 @@ const UserPage = (props: UserPageProps) => {
     );
   }
 
-  const renderNoItems = () => <h3 className='text-2xl p-3 bg-amber-200 font-extrabold text-amber-500 rounded-xl w-full shadow-inner text-center'>No posts yet</h3>;
+  const renderNoItems = () => <h3 className='text-2xl p-3 bg-amber-200 font-extrabold text-amber-500 rounded-xl w-full shadow-inner text-center'><span className='animate-bounce inline-block'>👻</span> No posts yet</h3>;
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     const increment = +e.currentTarget.value;
