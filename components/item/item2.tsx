@@ -29,13 +29,23 @@ const Item2 = (props: ItemProps) => {
   const isAskHN = title && title.startsWith('Ask HN:'); 
   const isShowHN = title && title.startsWith('Show HN:'); 
 
+  const getBaseClass = () => {
+    if (type === 'comment') return 'comment-base';
+    if (type === 'pollopt') return 'pollopt-base';
+    if (type === 'poll')return 'poll-base';
+    if (type === 'job') return 'job-base';
+    if (isShowHN) return 'show-hn-base';
+    if (isAskHN) return 'ask-hn-base';
+    return 'story-base';
+  }
+
   const renderIndex = () => {
     if (!props.index) return null;
     return (<div className='index'>{props.index}</div>);
   }
 
   const renderComment = () => {
-    return <span>{props.text}</span>
+    return <span className='whitespace-normal' dangerouslySetInnerHTML={{__html: props?.text || ''}}></span>
   }
 
   const renderAskHNTitle = () => {
@@ -44,9 +54,8 @@ const Item2 = (props: ItemProps) => {
 
     return (
       <div className='pr-2'>
-        <h3>Ask HN:</h3>
+        <h3 className='item-title'>Ask HN:</h3>
         <p className='x-hn-text ask-hn'>"{question}"</p>
-        <p className='text-right mr-6'>- <Link href={`/user/${by}`}><a className='font-bold'>{by}</a></Link></p>
       </div>
     );
   }
@@ -57,7 +66,7 @@ const Item2 = (props: ItemProps) => {
 
     return (
       <div className='pr-2'>
-        <h3>Show HN:</h3>
+        <h3 className='item-title'>Show HN:</h3>
         <p className='x-hn-text show-hn'>{shinyThing}</p>
       </div>
     );
@@ -94,10 +103,10 @@ const Item2 = (props: ItemProps) => {
     // This is disgusting lmao
     if (pres.getFullYear() - past.getFullYear() > 0) {
       n = pres.getFullYear() - past.getFullYear();
-      unit = 'yr';
+      unit = 'y';
     } else if (pres.getMonth() - past.getMonth() > 0) {
       n = pres.getMonth() - past.getMonth();
-      unit = 'month'
+      unit = 'mo'
     } else if (pres.getDate() - past.getDate() > 0) {
       n = pres.getDate() - past.getDate();
       unit = 'd';
@@ -106,42 +115,39 @@ const Item2 = (props: ItemProps) => {
       unit = 'h';
     } else if (pres.getMinutes() - past.getHours() > 1) {
       n = pres.getMinutes() - past.getMinutes(); 
-      unit = 'min';
+      unit = 'm';
     } else {
       n = 1;
-      unit = 'min';  
+      unit = 'm';  
     }
     
-    return <span>🕑{`${n}${unit}`}</span> 
+    return <span className='text-slate-500'>🕑{`${n}${unit}`}</span> 
   }
 
-  const renderScore = () => (score ? <span>🔼{score}</span> : null);
+  const renderScore = () => <span className='text-slate-500'>🔼{score || 0}</span>;
 
-  const renderDiscussionLink = () => {
-    const { kids, descendants } = props;
+  const renderDiscussionLink = () => (props.descendants ? 
+    <Link href={`/item/${id}`}><a className='comments-link' title='Comments'>🗨️{props.descendants}</a></Link> : 
+    <span className='text-slate-500'>🗨️0</span>);
 
-    if (!descendants || descendants === 0 || !kids || kids.length === 0) return null;
-
-    // Come back to this. Might want to send kid ids to Item page
-    return (<Link href={`/item/${id}`}><a>{descendants} comments</a></Link>);
-  }
-
-  const renderUserId = () => (isAskHN ? null : <Link href={`/user/${by}`}><a>{by}</a></Link>);
+  const renderUserId = () => (<Link href={`/user/${by}`}><a className='user-link'>👤{by}</a></Link>);
 
   return (
-    <div className='item-wrapper'>
+    <div className={`item-wrapper ${getBaseClass()}`}>
       <div className='truncate flex space-x-2'>
         {/* Small left column */}
         {renderIndex()}
+
         {/* Big right column */}
-        <div className='text-sm flex flex-col space-x-2 w-full'>
+        <div className='text-sm flex flex-col space-y-3 w-full'>
           {renderTitle()}
           {/* Bottom row */}
-          <div className='flex justify-between'>
-            {renderTime()}
-            {renderScore()}
-            {renderDiscussionLink()}
-            {renderUserId()}
+          <div className='font-mono flex justify-between sm:justify-start sm:space-x-8'>
+              {renderUserId()}
+              {renderTime()}            
+          
+              {renderScore()}
+              {renderDiscussionLink()}
           </div>
         </div>
       </div>

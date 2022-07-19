@@ -6,6 +6,34 @@
   .active {
     @apply bg-slate-300 px-2 sm:px-3 md:px-4 py-1 rounded-full shadow;
   }
+
+  .comment-base {
+    @apply bg-red-300;
+  }
+
+  .pollopt-base {
+    @apply bg-slate-300;
+  }
+
+  .poll-base {
+    @apply bg-blue-300;
+  }
+
+  .job-base {
+    @apply bg-violet-300;
+  }
+
+  .show-hn-base {
+    @apply bg-green-300;
+  }
+
+  .ask-hn-base {
+    @apply bg-cyan-300;
+  }
+
+  .story-base {
+    @apply bg-slate-400;
+  }
 }
 
 @layer components {
@@ -42,6 +70,14 @@
 
   .story-url {
     @apply block text-xs sm:text-sm opacity-50 hover:underline whitespace-normal;
+  }
+
+  .user-link {
+    @apply font-bold text-indigo-500 hover:text-indigo-700;
+  }
+
+  .comments-link {
+    @apply text-indigo-500 hover:text-indigo-700;
   }
 
   .x-hn-text {
