@@ -37,9 +37,22 @@ const Item2 = (props: ItemProps) => {
     const question = title!.substring(colonIndex + 1).trim();
 
     return (
-      <div>
-        <h3><Link href={`/user/${by}`}><a className='font-bold'>{by}</a></Link> asks HN:</h3>
-        <p className='ask-hn-text'>{question}</p>
+      <div className='pr-2'>
+        <h3>Ask HN:</h3>
+        <p className='x-hn-text ask-hn'>"{question}"</p>
+        <p className='text-right mr-6'>- <Link href={`/user/${by}`}><a className='font-bold'>{by}</a></Link></p>
+      </div>
+    );
+  }
+
+  const renderShowHNTitle = () => {
+    const colonIndex = title!.indexOf(':');
+    const shinyThing = title!.substring(colonIndex + 1).trim();
+
+    return (
+      <div className='pr-2'>
+        <h3>Show HN:</h3>
+        <p className='x-hn-text show-hn'>{shinyThing}</p>
       </div>
     );
   }
@@ -48,7 +61,7 @@ const Item2 = (props: ItemProps) => {
     if (!title) return null;
 
     if (isAskHN) return renderAskHNTitle();
-    // if (isShowHN) return renderShowHNTitle();
+    if (isShowHN) return renderShowHNTitle();
 
     if (url) {
       let shortUrl = url.slice(url.indexOf('//') + 2).replace('www.', '');
@@ -65,12 +78,48 @@ const Item2 = (props: ItemProps) => {
     return <Link href={`/item/${id}`}><a className='item-title'>{title}</a></Link>;
   }
 
+  const renderTime = () => {
+    const past = new Date(1000 * time);
+    const pres = new Date();
+
+    let n: number;
+    let unit: string;
+    
+    // This is disgusting lmao
+    if (pres.getFullYear() - past.getFullYear() > 0) {
+      n = pres.getFullYear() - past.getFullYear();
+      unit = 'yr';
+    } else if (pres.getMonth() - past.getMonth() > 0) {
+      n = pres.getMonth() - past.getMonth();
+      unit = 'month'
+    } else if (pres.getDate() - past.getDate() > 0) {
+      n = pres.getDate() - past.getDate();
+      unit = 'd';
+    } else if (pres.getHours() - past.getHours() > 0) {
+      n = pres.getHours() - past.getHours();
+      unit = 'h';
+    } else if (pres.getMinutes() - past.getHours() > 1) {
+      n = pres.getMinutes() - past.getMinutes(); 
+      unit = 'min';
+    } else {
+      n = 1;
+      unit = 'min';  
+    }
+    
+    return <span>🕑{`${n}${unit}`}</span> 
+  }
+
   return (
     <div className='item-wrapper'>
       {/* Top row */}
       <div className='truncate flex space-x-2'>
         {renderIndex()}
         {renderTitle()}
+      </div>
+
+      {/* Secondary meta data stuff */}
+      <div className='flex'>
+        {renderTime()}
       </div>
     </div>
   )

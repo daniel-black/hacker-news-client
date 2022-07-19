@@ -44,7 +44,15 @@
     @apply block text-xs sm:text-sm opacity-50 hover:underline whitespace-normal;
   }
 
-  .ask-hn-text {
-    @apply whitespace-normal italic font-bold bg-orange-100 text-orange-500 rounded-xl shadow-inner hover:shadow brightness-95 hover:brightness-100 hover:scale-105 py-2 px-3 my-2 mr-2 duration-200 ease-in-out;
+  .x-hn-text {
+    @apply whitespace-normal font-bold rounded-xl shadow-inner hover:shadow brightness-95 hover:brightness-100 hover:scale-105 py-2 px-3 my-2 duration-200 ease-in-out;
+  }
+
+  .ask-hn {
+    @apply italic bg-orange-100 text-orange-500;
+  }
+
+  .show-hn {
+    @apply bg-red-100 text-red-500;
   }
 }
