@@ -22,4 +22,8 @@
   .tileTitle {
     @apply absolute font-mono text-xl font-semibold top-2 left-3;
   }
+
+  .cont {
+    @apply container px-4 md:px-24 lg:px-32;
+  }
 }
