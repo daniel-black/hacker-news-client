@@ -5,7 +5,7 @@ import Item, { ItemProps } from "../../components/item/item";
 
 type ItemPageProps = {
   item: ItemProps,
-  childrenItems: ItemProps[]
+  childrenItems?: ItemProps[]
 };
 
 const ItemPage = (props: ItemPageProps) => {
@@ -14,9 +14,9 @@ const ItemPage = (props: ItemPageProps) => {
 
   return (
     <Container>
-      <Item {...item} />
-      <div className="px-6 space-y-3 mt-3">
-        {childrenItems.map((item, index) => (
+      <div className="sticky top-3"><Item {...item} /></div>
+      <div className="px-3 sm:px-6 space-y-3 mt-3">
+        {childrenItems?.map((item, index) => (
           item.dead || item.deleted ? null : <Item {...item} key={index} />
         ))}
       </div>
@@ -32,11 +32,12 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   const { data, status } = await axios.get(`/item/${itemId}.json`);
 
-  if (!data || status !== 200) {
-    return {
-      noFound: true
-    }
-  }
+  // This check causes nextjs type error ??
+  // if (!data || status !== 200) {
+  //   return {
+  //     noFound: true
+  //   }
+  // }
 
   const item: ItemProps = data;
   let childrenItems = [] as ItemProps[];
@@ -49,10 +50,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   return {
-      props: {
-      item,
-      childrenItems,
-      key: item.id
-    }
+    props: {
+      item, childrenItems, key: item.by
+    },
   }
 }
