@@ -48,7 +48,7 @@ const Item2 = (props: ItemProps) => {
       <div className='space-y-3'>
         <h3 className='font-bold leading-tight whitespace-normal font-mono flex items-center'>
           <span className='mr-2 inline-block h-4 w-4 bg-gradient-to-br from-pink-600 via-pink-700 to-pink-500 shadow-md rounded-full'></span>
-          <Link href={`/item/${props.parent}`}><a className='hover:underline'>(Replying to parent post)</a></Link>
+          <Link href={`/item/${props.parent}`}><a className='hover:underline'>(Replying to <span className='text-pink-600'>PARENT</span> post)</a></Link>
         </h3>
         <div className='whitespace-normal border-l-2 pl-2 ml-2 border-pink-500' suppressHydrationWarning dangerouslySetInnerHTML={{__html: props?.text || ''}}></div>
       </div>
