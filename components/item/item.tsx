@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
 import { ItemModel } from '../../models';
-import axios from '../../utils/axios';
 
 export type ItemProps = {
   id: number,
