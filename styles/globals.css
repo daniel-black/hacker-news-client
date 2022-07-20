@@ -42,7 +42,7 @@
   }
 
   .index {
-    @apply font-mono text-xs sm:text-sm bg-slate-50 shadow rounded-full flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 select-none;
+    @apply font-mono text-xs sm:text-sm md:text-base bg-slate-50 shadow rounded-full flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 select-none;
   }
 
   .item-wrapper {
@@ -51,7 +51,7 @@
   }
 
   .item-title {
-    @apply text-base sm:text-lg font-bold leading-tight whitespace-normal;
+    @apply text-lg sm:text-xl font-bold leading-tight whitespace-normal;
   }
 }
 
@@ -69,7 +69,7 @@
   }
 
   .story-url {
-    @apply block text-xs sm:text-sm opacity-50 hover:underline whitespace-normal;
+    @apply block text-xs sm:text-base opacity-70 hover:underline whitespace-normal;
   }
 
   .user-link {
@@ -81,7 +81,7 @@
   }
 
   .x-hn-text {
-    @apply whitespace-normal font-bold rounded-xl shadow-inner hover:shadow brightness-95 hover:brightness-100 hover:scale-105 py-2 px-3 my-2 duration-200 ease-in-out;
+    @apply text-xl hover:underline sm:text-2xl md:text-3xl lg:text-4xl md:max-w-fit whitespace-normal font-bold rounded-xl brightness-[103%] shadow hover:shadow-md py-2 px-3 my-2 duration-200 ease-in-out;
   }
 
   .ask-hn {
