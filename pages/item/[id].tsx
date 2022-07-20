@@ -12,13 +12,15 @@ type ItemPageProps = {
 const ItemPage = (props: ItemPageProps) => {
   const { item, childrenItems } = props;
 
-  const [isSticky, setIsSticky] = useState(true);
+  const [isSticky, setIsSticky] = useState(childrenItems && childrenItems.length > 6);
 
   return (
     <Container>
       <div className={isSticky ? "sticky top-3" : ''}>
         <Item {...item} />
-        <button className={isSticky ? "flex items-center justify-center h-6 w-6 rounded-full bg-slate-400 font-mono absolute right-4 top-14 shadow-md" : 'hidden'} onClick={() => setIsSticky(false)}>X</button>
+        {childrenItems && childrenItems.length > 6 ? 
+          (<button className={isSticky ? "sticky-btn" : 'hidden'} onClick={() => setIsSticky(false)}>X</button>) : 
+          null}
       </div>
       <div className="px-3 sm:px-6 space-y-3 mt-3">
         {childrenItems?.map((item, index) => (

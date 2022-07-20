@@ -58,6 +58,10 @@
   .return-to-top-btn {
     @apply flex items-center justify-center opacity-80 text-4xl bg-slate-900 text-white leading-none h-16 w-16 rounded-full fixed bottom-12 right-4 shadow-lg hover:scale-105 hover:shadow-xl duration-200 ease-in-out;
   }
+
+  .sticky-btn {
+    @apply flex items-center justify-center h-6 w-6 rounded-full bg-slate-400 opacity-75 font-mono absolute right-4 bottom-[9px] shadow-md;
+  }
 }
 
 @layer utilities {
