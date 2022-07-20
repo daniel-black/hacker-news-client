@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import Item2, { ItemProps } from '../../components/item/item2';
+import Item, { ItemProps } from '../../components/item/item';
 import TilePlaceholders from '../../components/placeholders/tilePlaceholders';
 import Container from '../../components/structure/container';
 import TileData from '../../components/user/tileData';
@@ -121,9 +121,9 @@ const UserPage = (props: UserPageProps) => {
   }
 
   const renderItems = () => (
-    <div className='mt-6 space-y-3'>
+    <div className='mt-6 space-y-6'>
       {items.map((item, index) => (
-        <Item2 {...item} key={index} />
+        <Item {...item} key={index} />
       ))}
     </div>
   );

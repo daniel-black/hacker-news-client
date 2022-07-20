@@ -1,10 +1,9 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-import { ItemModel } from "../../models";
-import Item from "../../components/item/item";
 import axios from 'axios';
 import useSWR from "swr";
 import Container from "../../components/structure/container";
+import Item, { ItemProps } from "../../components/item/item";
 
 const fetcher = (url: string) => axios.get(url).then(res => res.data);
 
@@ -18,7 +17,7 @@ const ItemPage: NextPage = () => {
   if (error) return <div>failed to load</div>
   if (!data) return <div>loading...</div>
 
-  const item: ItemModel = data;
+  const item: ItemProps = data;
 
   return (
     <Container>
