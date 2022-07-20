@@ -1,9 +1,15 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const ReturnToTopButton = () => {
+  const { pathname } = useRouter();
+
   return (
-    <button className="return-to-top-btn">
-      🔝
-    </button>
+    <Link href={`${pathname}#top`}>
+      <button className="return-to-top-btn">
+        🔝
+      </button>
+    </Link>
   )
 }
 

@@ -55,7 +55,7 @@
   }
 
   .return-to-top-btn {
-    @apply flex items-center justify-center text-xl bg-slate-300 text-white leading-none h-10 w-10 rounded-full;
+    @apply flex items-center justify-center opacity-80 text-4xl bg-slate-900 text-white leading-none h-16 w-16 rounded-full fixed bottom-12 right-4 shadow-lg hover:scale-105 hover:shadow-xl duration-200 ease-in-out;
   }
 }
 
