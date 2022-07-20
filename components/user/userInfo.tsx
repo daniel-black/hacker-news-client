@@ -16,7 +16,7 @@ const UserInfo = (props: UserInfoProps) => {
         (
         <div className="flex items-start border-b-2 border-dashed border-slate-300 pb-2 mb-2">
           <span>✨&nbsp;</span>
-          <span className='text-ellipsis overflow-hidden' dangerouslySetInnerHTML={{ __html: about }}></span>
+          <span className='text-ellipsis overflow-hidden' suppressHydrationWarning dangerouslySetInnerHTML={{ __html: about }}></span>
         </div>
         ) : 
         null 

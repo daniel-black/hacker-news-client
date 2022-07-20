@@ -45,8 +45,12 @@ const Item2 = (props: ItemProps) => {
 
   const renderComment = () => {
     return (
-      <div>
-        <div className='whitespace-normal' dangerouslySetInnerHTML={{__html: props?.text || ''}}></div>
+      <div className='space-y-3'>
+        <h3 className='font-bold leading-tight whitespace-normal font-mono flex items-center'>
+          <span className='mr-2 inline-block h-4 w-4 bg-gradient-to-br from-pink-600 via-pink-700 to-pink-500 shadow-md rounded-full'></span>
+          <Link href={`/item/${props.parent}`}><a className='hover:underline'>(Replying to parent post)</a></Link>
+        </h3>
+        <div className='whitespace-normal border-l-2 pl-2 ml-2 border-pink-500' suppressHydrationWarning dangerouslySetInnerHTML={{__html: props?.text || ''}}></div>
       </div>
     );
   }
@@ -58,7 +62,11 @@ const Item2 = (props: ItemProps) => {
     return (
       <div className='pr-2'>
         <h3 className='item-title'>Ask HN:</h3>
-        <p className='x-hn-text ask-hn'>"{question}"</p>
+        <p className='x-hn-text ask-hn'>
+          <Link href={`/item/${id}`}>
+            <a>"{question}"</a>
+          </Link>
+        </p>
       </div>
     );
   }
@@ -70,7 +78,11 @@ const Item2 = (props: ItemProps) => {
     return (
       <div className='pr-2'>
         <h3 className='item-title'>Show HN:</h3>
-        <p className='x-hn-text show-hn'>{shinyThing}</p>
+        <p className='x-hn-text show-hn'>
+          <Link href={`/item/${id}`}>
+              <a>"{shinyThing}"</a>
+            </Link>
+          </p>
       </div>
     );
   }
@@ -142,15 +154,15 @@ const Item2 = (props: ItemProps) => {
         {renderIndex()}
 
         {/* Big right column */}
-        <div className='text-sm flex flex-col space-y-3 w-full'>
+        <div className='flex flex-col space-y-3 w-full'>
           {renderTitle()}
           {/* Bottom row */}
-          <div className='font-mono flex justify-between sm:justify-start sm:space-x-8'>
-              {renderUserId()}
-              {renderTime()}            
-          
-              {renderScore()}
-              {renderDiscussionLink()}
+          <div className='font-mono text-md sm:text-lg  flex justify-start space-x-4 sm:space-x-8'>
+            {renderUserId()}
+            {renderTime()}            
+        
+            {renderScore()}
+            {renderDiscussionLink()}
           </div>
         </div>
       </div>
