@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import axios from '../../utils/axios';
 import Container from "../../components/structure/container";
 import Item, { ItemProps } from "../../components/item/item";
+import { useState } from "react";
 
 type ItemPageProps = {
   item: ItemProps,
@@ -11,10 +12,14 @@ type ItemPageProps = {
 const ItemPage = (props: ItemPageProps) => {
   const { item, childrenItems } = props;
 
+  const [isSticky, setIsSticky] = useState(true);
 
   return (
     <Container>
-      <div className="sticky top-3"><Item {...item} /></div>
+      <div className={isSticky ? "sticky top-3" : ''}>
+        <Item {...item} />
+        <button className={isSticky ? "flex items-center justify-center h-6 w-6 rounded-full bg-slate-400 font-mono absolute right-4 top-14 shadow-md" : 'hidden'} onClick={() => setIsSticky(false)}>X</button>
+      </div>
       <div className="px-3 sm:px-6 space-y-3 mt-3">
         {childrenItems?.map((item, index) => (
           item.dead || item.deleted ? null : <Item {...item} key={index} />
