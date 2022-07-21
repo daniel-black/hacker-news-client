@@ -2,7 +2,6 @@ import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from "next";
 import Container from "../../components/structure/container";
 import Item, { ItemProps } from "../../components/item/item";
 import { StoryType, ItemModel } from "../../models";
-import { getXStories } from "../../utils/hackerNewsCalls";
 import { useState, useEffect } from 'react';
 import axios from '../../utils/axios';
 import Head from "next/head";
@@ -46,7 +45,7 @@ const Stories = (props: StoriesProps) => {
   return (
     <Container>
       <Head>
-        <title>{storyType} stories</title>
+        <title>{storyType.charAt(0).toUpperCase() + storyType.slice(1)} Stories</title>
       </Head>
 
       <div className="space-y-6">
@@ -87,8 +86,16 @@ export const getStaticProps: GetStaticProps = async (context: GetStaticPropsCont
     };
   }
 
-  const posts = await getXStories(storyType, initialStoryCount) as ItemModel[];
-  
+  // get the itemIds
+  const itemIdsRequests = await axios.get(`/${storyType}stories.json?limitToFirst=${initialStoryCount}&orderBy="$key"`);
+  const itemIds: number[] = itemIdsRequests.data;  
+
+  // get items from itemIds 
+  const itemRequests = itemIds.map(id => axios.get(`/item/${id}.json`)); 
+  const data = await Promise.all(itemRequests);
+
+  const posts = data.map(i => i.data);
+
   return {
     props: { posts, storyType, initialStoryCount, key: storyType }
   };

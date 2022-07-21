@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   return (
     <div className='flex-grow'>
       <Head>
-        <title>Hacker News Client</title>
+        <title>Hacolyte</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
