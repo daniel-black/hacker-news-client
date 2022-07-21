@@ -33,8 +33,6 @@ const Stories = (props: StoriesProps) => {
     getMoreItems();
   }, [itemsOnPage]);
 
-  console.dir(posts);
-
   const getHeadingWording = () => {
     if (storyType === 'new') {
       return `Viewing the ${itemsOnPage} newest posts`;

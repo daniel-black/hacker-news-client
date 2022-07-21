@@ -2,11 +2,13 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import Item, { ItemProps } from '../../components/item/item';
+import Spinner from '../../components/placeholders/spinner';
 import TilePlaceholders from '../../components/placeholders/tilePlaceholders';
 import Container from '../../components/structure/container';
 import TileData from '../../components/user/tileData';
 import UserCircleAndName from '../../components/user/userCircleAndName';
 import UserInfo from '../../components/user/userInfo';
+import UserItemsSummary from '../../components/user/userItemsSummary';
 import { ItemModel, UserModel } from '../../models';
 import axios from '../../utils/axios';
 
@@ -16,6 +18,8 @@ type UserPageProps = {
 };
 
 const UserPage = (props: UserPageProps) => {
+  const requestLimit = 1300;  // anything past this bricks your computer
+
   const { user } = props;
 
   const [items, setItems] = useState(props.items);
@@ -24,6 +28,7 @@ const UserPage = (props: UserPageProps) => {
 
   useEffect(() => {
     async function loadItems() {
+      console.time('load items');
       if(!user.submitted) return;
       const itemIds = user.submitted!.slice(items.length, itemCount);
       const requests = itemIds.map(id => axios.get(`/item/${id}.json`));
@@ -32,7 +37,7 @@ const UserPage = (props: UserPageProps) => {
       const newItems: ItemProps[] = responses.map(response => response.data);
       setItems(items.concat(newItems));
       setLoadingItems(false);
-      console.dir(items)
+      console.timeEnd('load items');
     }
     loadItems();
   }, [itemCount]);
@@ -72,21 +77,19 @@ const UserPage = (props: UserPageProps) => {
       if (item.type === 'poll') polls.push(item);
       if (item.type === 'job') jobs.push(item);
     });
-    
-    const realData = (
-      <>
-        <div className='tile story-base md:col-span-2'><TileData title='Stories' value={stories.length} /></div>
-        <div className='tile comment-base md:col-span-2'><TileData title='Comments' value={comments.length} /></div>
-        <div className='tile ask-hn-base'><TileData title='Ask HN' value={askHN.length} /></div>
-        <div className='tile show-hn-base'><TileData title='Show HN' value={showHN.length} /></div>
-        <div className='tile job-base'><TileData title='Jobs' value={jobs.length} /></div>
-        <div className='tile poll-base'><TileData title='Polls' value={polls.length} /></div>
-      </>
-    );
 
     return (
       <div className='mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3'>
-        {loadingItems ? <TilePlaceholders /> : realData}
+        {loadingItems ? 
+          <TilePlaceholders /> : 
+          <UserItemsSummary 
+            numStories={stories.length}  
+            numComments={comments.length}
+            numAskHN={askHN.length}
+            numShowHN={showHN.length}
+            numJobs={jobs.length}
+            numPolls={polls.length}
+          />}
       </div>
     );
   }
@@ -101,22 +104,26 @@ const UserPage = (props: UserPageProps) => {
   }
 
   const renderItemControls = () => {
+    const canLoad = user.submitted!.length > 15 || itemCount === user.submitted?.length;
+    const canLoadAll = user.submitted!.length - itemCount < requestLimit;
+
     return (
       <div className='relative'>
-        <span className={`${loadingItems ? ' animate-loading opacity-100' : 'opacity-0 animate-none'} text-3xl sm:text-4xl md:5xl absolute left-1/2 top-2 md:top-3 z-10 duration-300 ease-in-out my-auto`}>🌀</span>
-        
-        <div className={`${loadingItems ? 'blur-sm -z-10 ease-in-out duration-75' : ''} text-base md:text-xl flex items-center justify-between h-12 md:h-16 py-1 md:py-3 px-2 md:px-6 rounded-xl w-full shadow-inner bg-indigo-100 text-indigo-500`}>
-        <p><span className='font-bold text-slate-50 bg-indigo-500 px-1.5 md:px-2 py-1 rounded-lg'>{itemCount}</span> {itemCount === user.submitted!.length ? 'total' : 'latest'} posts</p>
-        {user.submitted!.length > 15 || itemCount === user.submitted?.length ? 
-          (<>
-            <div className={user.submitted && itemCount === user.submitted.length ? 'hidden' : 'flex items-center'}>
-              <p className='mr-2'>Load more</p>
-              <button value={15} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-2 md:px-3 py-1 rounded-l-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>15</button>
-              <button value={30} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-2 md:px-3 py-1 mx-0.5 shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>30</button>
-              <button value={user.submitted!.length - itemCount} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-2 md:px-3 py-1 rounded-r-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>All</button>
-            </div>
-          </>) : null}
-      </div>
+        <Spinner spin={loadingItems} />
+        <div className={`${loadingItems ? 'blur-sm -z-10 ease-in-out duration-75' : ''} item-controls-wrapper`}>
+          <span className='font-bold text-slate-50 bg-indigo-500 px-1.5 md:px-2 py-1 rounded-lg'>
+            {itemCount} {itemCount === user.submitted!.length ? 'total' : 'latest'} posts
+          </span>
+          {canLoad ? 
+            (<>
+              <div className={user.submitted && itemCount === user.submitted.length ? 'hidden' : 'flex items-center'}>
+                <p className='mr-2'>Load more</p>
+                <button value={15} onClick={(e) => handleClick(e)} className='rounded-l-full load-option' disabled={itemCount === user.submitted!.length}>15</button>
+                <button value={30} onClick={(e) => handleClick(e)} className={canLoadAll ? 'mx-0.5 load-option' : 'rounded-r-full ml-0.5 load-option'} disabled={itemCount === user.submitted!.length}>30</button>
+                {canLoadAll ? <button value={user.submitted!.length - itemCount} onClick={(e) => handleClick(e)} className='rounded-r-full load-option' disabled={itemCount === user.submitted!.length}>All</button> : null}
+              </div>
+            </>) : null}
+        </div>
       </div>
     );
   }
