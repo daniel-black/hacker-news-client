@@ -117,7 +117,7 @@ const UserPage = (props: UserPageProps) => {
           {canLoad ? 
             (<>
               <div className={user.submitted && itemCount === user.submitted.length ? 'hidden' : 'flex items-center'}>
-                <p className='mr-2'>Load more</p>
+                <p className='mr-2'>Load <span className='hidden sm:inline'>more</span></p>
                 <button value={15} onClick={(e) => handleClick(e)} className='rounded-l-full load-option' disabled={itemCount === user.submitted!.length}>15</button>
                 <button value={30} onClick={(e) => handleClick(e)} className={canLoadAll ? 'mx-0.5 load-option' : 'rounded-r-full ml-0.5 load-option'} disabled={itemCount === user.submitted!.length}>30</button>
                 {canLoadAll ? <button value={user.submitted!.length - itemCount} onClick={(e) => handleClick(e)} className='rounded-r-full load-option' disabled={itemCount === user.submitted!.length}>All</button> : null}

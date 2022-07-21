@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image';
+import Promos from '../components/promos';
 import Container from '../components/structure/container';
 
 const Home: NextPage = () => {
@@ -31,6 +32,7 @@ const Home: NextPage = () => {
         </div>
         
       </Container>
+      <Promos />
     </div>
   )
 }
