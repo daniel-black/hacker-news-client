@@ -22,8 +22,8 @@ const UserInfo = (props: UserInfoProps) => {
         null 
       }
       <p>📅 Joined in {new Date(created * 1000).getFullYear()}</p>
-      <p>🔼 {karma} Karma</p>
-      <p>✍️ {numPosts} post{numPosts === 1 ? '' : 's'}</p>
+      <p>🔼 {karma.toLocaleString("en-US")} Karma</p>
+      <p>✍️ {numPosts.toLocaleString("en-US")} post{numPosts === 1 ? '' : 's'}</p>
     </div>
   );
 }
