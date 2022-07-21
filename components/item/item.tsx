@@ -78,10 +78,8 @@ const Item = (props: ItemProps) => {
       <div className='pr-2'>
         <h3 className='item-title'>Show HN:</h3>
         <p className='x-hn-text show-hn'>
-          <Link href={`/item/${id}`}>
-              <a>"{shinyThing}"</a>
-            </Link>
-          </p>
+          <a href={url} target="_blank" rel="noreferrer">"{shinyThing}"</a>
+        </p>
       </div>
     );
   }

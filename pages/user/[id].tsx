@@ -32,6 +32,7 @@ const UserPage = (props: UserPageProps) => {
       const newItems: ItemProps[] = responses.map(response => response.data);
       setItems(items.concat(newItems));
       setLoadingItems(false);
+      console.dir(items)
     }
     loadItems();
   }, [itemCount]);
@@ -104,7 +105,7 @@ const UserPage = (props: UserPageProps) => {
       <div className='relative'>
         <span className={`${loadingItems ? ' animate-loading opacity-100' : 'opacity-0 animate-none'} text-3xl sm:text-4xl md:5xl absolute left-1/2 top-2 md:top-3 z-10 duration-300 ease-in-out my-auto`}>🌀</span>
         
-        <div className={`${loadingItems ? 'blur-sm -z-10 ease-in-out duration-75' : ''} text-sm md:text-xl flex items-center justify-between h-12 md:h-16 py-1 md:py-3 px-2 md:px-6 rounded-xl w-full shadow-inner bg-indigo-100 text-indigo-500`}>
+        <div className={`${loadingItems ? 'blur-sm -z-10 ease-in-out duration-75' : ''} text-base md:text-xl flex items-center justify-between h-12 md:h-16 py-1 md:py-3 px-2 md:px-6 rounded-xl w-full shadow-inner bg-indigo-100 text-indigo-500`}>
         <p><span className='font-bold text-slate-50 bg-indigo-500 px-1.5 md:px-2 py-1 rounded-lg'>{itemCount}</span> {itemCount === user.submitted!.length ? 'total' : 'latest'} posts</p>
         {user.submitted!.length > 15 || itemCount === user.submitted?.length ? 
           (<>
@@ -123,7 +124,7 @@ const UserPage = (props: UserPageProps) => {
   const renderItems = () => (
     <div className='mt-6 space-y-6'>
       {items.map((item, index) => (
-        <Item {...item} key={index} />
+        item.dead || item.deleted ? null : <Item {...item} key={index} />
       ))}
     </div>
   );
