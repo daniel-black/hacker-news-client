@@ -106,9 +106,9 @@ const UserPage = (props: UserPageProps) => {
         
         <div className={`${loadingItems ? 'blur-sm -z-10 ease-in-out duration-75' : ''} text-sm md:text-xl flex items-center justify-between h-12 md:h-16 py-1 md:py-3 px-2 md:px-6 rounded-xl w-full shadow-inner bg-indigo-100 text-indigo-500`}>
         <p><span className='font-bold text-slate-50 bg-indigo-500 px-1.5 md:px-2 py-1 rounded-lg'>{itemCount}</span> {itemCount === user.submitted!.length ? 'total' : 'latest'} posts</p>
-        {user.submitted!.length > 15 ? 
+        {user.submitted!.length > 15 || itemCount === user.submitted?.length ? 
           (<>
-            <div className='flex items-center'>
+            <div className={user.submitted && itemCount === user.submitted.length ? 'hidden' : 'flex items-center'}>
               <p className='mr-2'>Load more</p>
               <button value={15} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-2 md:px-3 py-1 rounded-l-full shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>15</button>
               <button value={30} onClick={(e) => handleClick(e)} className='bg-indigo-300 px-2 md:px-3 py-1 mx-0.5 shadow font-bold hover:bg-indigo-500 hover:text-slate-50 hover:shadow-inner duration-75' disabled={itemCount === user.submitted!.length}>30</button>
