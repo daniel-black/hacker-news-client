@@ -19,7 +19,7 @@
     @apply bg-purple-100 text-purple-500;
   }
 
-  .job-base {
+  .story-base {
     @apply bg-sky-100 text-sky-500;
   }
 
@@ -31,7 +31,7 @@
     @apply bg-orange-100 text-orange-500;
   }
 
-  .story-base {
+  .job-base {
     @apply bg-emerald-100 text-emerald-500;
   }
 }

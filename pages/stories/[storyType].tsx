@@ -49,8 +49,8 @@ const Stories = (props: StoriesProps) => {
         <title>{storyType} stories</title>
       </Head>
 
-      <div className="space-y-4">
-        <h2 className="font-mono">{getHeadingWording()}</h2>
+      <div className="space-y-6">
+        <h2 className="font-mono mt-2">{getHeadingWording()}</h2>
         <div className="space-y-5 xl:space-y-0 gap-5 xl:grid grid-cols-2">
           {items.map((post, index) => <Item {...post} index={+index + 1} key={index} />)}
         </div>

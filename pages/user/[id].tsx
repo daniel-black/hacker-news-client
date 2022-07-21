@@ -44,7 +44,7 @@ const UserPage = (props: UserPageProps) => {
 
     return(
       <button 
-        className="group mt-3 tracking-wide shadow hover:shadow-lg px-1 py-2 text-indigo-500 w-full text-xl font-extrabold bg-indigo-100 border-indigo-500 border-2 rounded-xl hover:bg-indigo-500 hover:text-white duration-100 ease-in-out relative"
+        className="group mt-6 tracking-wide shadow hover:shadow-lg px-1 py-2 text-indigo-500 w-full text-xl font-extrabold bg-indigo-100 border-indigo-500 border-2 rounded-xl hover:bg-indigo-500 hover:text-white duration-100 ease-in-out relative"
         onClick={() => setItemCount(itemCount + n)}
       >
         <span>Show next {n} posts</span>
