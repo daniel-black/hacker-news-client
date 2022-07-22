@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image';
+import BuyMeACoffee from '../components/buyMeACoffee';
 import Promos from '../components/promos';
 import Container from '../components/structure/container';
 
@@ -32,6 +33,9 @@ const Home: NextPage = () => {
         </div>
       </Container>
       <Promos />
+      <div className='flex flex-col items-center justify-center mb-16'>
+        <BuyMeACoffee />
+      </div>
     </div>
   )
 }
