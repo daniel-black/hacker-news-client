@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import React from 'react';
-import Router, { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { ItemModel } from '../../models';
 
 export type ItemProps = {
@@ -24,7 +24,7 @@ export type ItemProps = {
 
 const Item = (props: ItemProps) => {
   const { id, by, time, type, title, url, score, parent } = props;
-
+  const [displayText, setDisplayText] = useState(true);
   const router = useRouter();
   const { pathname } = router;
   const isItemPage = pathname === '/item/[id]';
@@ -71,7 +71,12 @@ const Item = (props: ItemProps) => {
             <a>"{question}"</a>
           </Link>
         </p>
-        {isItemPage && props.text ? <div className='px-3 whitespace-normal' suppressHydrationWarning dangerouslySetInnerHTML={{ __html: props.text }}></div> : null}
+        {isItemPage && props.text ? 
+          <>
+            <button className='text-slate-600 underline pl-3 text-sm' onClick={() => setDisplayText(!displayText)}>{displayText ? 'Hide' : 'Show'} text</button>
+            <div className={displayText ? 'px-3 whitespace-normal' : 'hidden'} suppressHydrationWarning dangerouslySetInnerHTML={{ __html: props.text }}></div>
+          </> 
+          : null}
       </div>
     );
   }
@@ -86,7 +91,12 @@ const Item = (props: ItemProps) => {
         <p className='x-hn-text show-hn'>
           <a href={url} target="_blank" rel="noreferrer">"{shinyThing}"</a>
         </p>
-        {isItemPage && props.text ? <div className='px-3 whitespace-normal' suppressHydrationWarning dangerouslySetInnerHTML={{ __html: props.text }}></div> : null}
+        {isItemPage && props.text ? 
+          <>
+            <button className='text-slate-600 underline pl-3 text-sm' onClick={() => setDisplayText(!displayText)}>{displayText ? 'Hide' : 'Show'} text</button>
+            <div className={displayText ? 'px-3 whitespace-normal' : 'hidden'} suppressHydrationWarning dangerouslySetInnerHTML={{ __html: props.text }}></div>
+          </> 
+          : null}
       </div>
     );
   }
