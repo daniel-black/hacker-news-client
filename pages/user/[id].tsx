@@ -5,7 +5,6 @@ import Item, { ItemProps } from '../../components/item/item';
 import Spinner from '../../components/placeholders/spinner';
 import TilePlaceholders from '../../components/placeholders/tilePlaceholders';
 import Container from '../../components/structure/container';
-import TileData from '../../components/user/tileData';
 import UserCircleAndName from '../../components/user/userCircleAndName';
 import UserInfo from '../../components/user/userInfo';
 import UserItemsSummary from '../../components/user/userItemsSummary';

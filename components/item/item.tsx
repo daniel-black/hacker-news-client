@@ -24,10 +24,13 @@ export type ItemProps = {
 
 const Item = (props: ItemProps) => {
   const { id, by, time, type, title, url, score, parent } = props;
-  const [displayText, setDisplayText] = useState(true);
+
   const router = useRouter();
   const { pathname } = router;
   const isItemPage = pathname === '/item/[id]';
+
+  const [displayText, setDisplayText] = useState(isItemPage);
+
 
   const isAskHN = title && title.startsWith('Ask HN:'); 
   const isShowHN = title && title.startsWith('Show HN:'); 
@@ -91,7 +94,7 @@ const Item = (props: ItemProps) => {
         <p className='x-hn-text show-hn'>
           <a href={url} target="_blank" rel="noreferrer">"{shinyThing}"</a>
         </p>
-        {isItemPage && props.text ? 
+        {props.text ? 
           <>
             <button className='text-slate-600 underline pl-3 text-sm' onClick={() => setDisplayText(!displayText)}>{displayText ? 'Hide' : 'Show'} text</button>
             <div className={displayText ? 'px-3 whitespace-normal' : 'hidden'} suppressHydrationWarning dangerouslySetInnerHTML={{ __html: props.text }}></div>
