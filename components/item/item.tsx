@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
+import React from 'react';
+import Router, { useRouter } from 'next/router';
 import { ItemModel } from '../../models';
 
 export type ItemProps = {
@@ -23,6 +24,10 @@ export type ItemProps = {
 
 const Item = (props: ItemProps) => {
   const { id, by, time, type, title, url, score, parent } = props;
+
+  const router = useRouter();
+  const { pathname } = router;
+  const isItemPage = pathname === '/item/[id]';
 
   const isAskHN = title && title.startsWith('Ask HN:'); 
   const isShowHN = title && title.startsWith('Show HN:'); 
@@ -66,6 +71,7 @@ const Item = (props: ItemProps) => {
             <a>"{question}"</a>
           </Link>
         </p>
+        {isItemPage && props.text ? <div className='px-3 whitespace-normal' suppressHydrationWarning dangerouslySetInnerHTML={{ __html: props.text }}></div> : null}
       </div>
     );
   }
@@ -80,6 +86,7 @@ const Item = (props: ItemProps) => {
         <p className='x-hn-text show-hn'>
           <a href={url} target="_blank" rel="noreferrer">"{shinyThing}"</a>
         </p>
+        {isItemPage && props.text ? <div className='px-3 whitespace-normal' suppressHydrationWarning dangerouslySetInnerHTML={{ __html: props.text }}></div> : null}
       </div>
     );
   }

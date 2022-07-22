@@ -27,7 +27,6 @@ const Stories = (props: StoriesProps) => {
       const responses = await Promise.all(requests);
 
       const newItems: ItemProps[] = responses.map(response => response.data)
-
       setItems(newItems);
     }
     getMoreItems();

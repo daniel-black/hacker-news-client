@@ -28,7 +28,6 @@ const UserPage = (props: UserPageProps) => {
 
   useEffect(() => {
     async function loadItems() {
-      console.time('load items');
       if(!user.submitted) return;
       const itemIds = user.submitted!.slice(items.length, itemCount);
       const requests = itemIds.map(id => axios.get(`/item/${id}.json`));
@@ -37,7 +36,6 @@ const UserPage = (props: UserPageProps) => {
       const newItems: ItemProps[] = responses.map(response => response.data);
       setItems(items.concat(newItems));
       setLoadingItems(false);
-      console.timeEnd('load items');
     }
     loadItems();
   }, [itemCount]);
