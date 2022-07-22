@@ -11,6 +11,7 @@ const Promos = () => {
             src={'/pg-profile.png'}
             width={611}
             height={315}
+            alt="Screenshot of the user page"
           />
         </div>
       
@@ -21,6 +22,7 @@ const Promos = () => {
           src={'/dropbox-item.png'}
           width={710}
           height={160}
+          alt="screenshot of a user's post"
         />
       </div>
 
@@ -31,6 +33,7 @@ const Promos = () => {
           src={'/tiles.png'}
           width={607}
           height={288}
+          alt="Screenshot of the summary of a users posting history"
         />
       </div>
 

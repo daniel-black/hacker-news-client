@@ -141,6 +141,7 @@ const UserPage = (props: UserPageProps) => {
       <>
         <Head>
           <title>{user.id}</title>
+          <meta name='description' content={`The profile page of Hacker News user, ${user.id}`} />
         </Head>
         
         <div>

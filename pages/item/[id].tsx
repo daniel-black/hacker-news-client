@@ -3,6 +3,7 @@ import axios from '../../utils/axios';
 import Container from "../../components/structure/container";
 import Item, { ItemProps } from "../../components/item/item";
 import { useState } from "react";
+import Head from "next/head";
 
 type ItemPageProps = {
   item: ItemProps,
@@ -16,6 +17,10 @@ const ItemPage = (props: ItemPageProps) => {
 
   return (
     <Container>
+      <Head>
+        <meta name="description" content="An item posted by a Hacker News user" />
+      </Head>
+
       <div className={isSticky ? "sticky top-3" : ''}>
         <Item {...item} />
         {childrenItems && childrenItems.length > 6 ? 

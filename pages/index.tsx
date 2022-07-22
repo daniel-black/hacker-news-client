@@ -12,6 +12,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Hacolyte</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name='description' content='A site that pulls stories posted to Hacker News from the Hacker News API and displays them for users to read' />
       </Head>
 
       <Container>

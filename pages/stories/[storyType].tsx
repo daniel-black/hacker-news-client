@@ -44,6 +44,7 @@ const Stories = (props: StoriesProps) => {
     <Container>
       <Head>
         <title>{storyType.charAt(0).toUpperCase() + storyType.slice(1)} Stories</title>
+        <meta name="description" content={`A list of the ${storyType} stories on Hacker News`} />
       </Head>
 
       <div className="space-y-6">
