@@ -38,7 +38,7 @@
 
 @layer components {
   .spinner-base {
-    @apply text-3xl sm:text-4xl absolute left-1/2 top-2 md:top-3 z-10 duration-300 ease-in-out my-auto;
+    @apply text-3xl sm:text-4xl md:top-3 z-10 duration-300 ease-in-out my-auto;
   }
 
   .item-controls-wrapper {
@@ -55,8 +55,6 @@
 
   .item-wrapper {
     @apply p-2 md:p-3 rounded-2xl shadow-md;
-    /* hover:scale-[101%] ease-in-out duration-200 */
-    /* to make it jump: hover:shadow-md hover:scale-y-105 ease-in-out duration-100 */
   }
 
   .item-title {
@@ -86,7 +84,7 @@
   }
 
   .cont {
-    @apply container px-4 md:px-24 lg:px-32;
+    @apply container px-4 md:px-24 lg:px-64;
   }
 
   .story-url {
@@ -111,5 +109,9 @@
 
   .show-hn {
     @apply bg-red-100 text-red-500;
+  }
+
+  .true-center {
+    @apply absolute w-full h-full flex justify-center items-center;
   }
 }
