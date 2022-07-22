@@ -110,7 +110,7 @@ const UserPage = (props: UserPageProps) => {
         <div className={`${loadingItems ? 'z-10' : '-z-10'} true-center`}><Spinner spin={loadingItems} /></div>
         <div className={`${loadingItems ? 'blur-sm -z-10 ease-in-out duration-75' : ''} item-controls-wrapper`}>
           <span className='font-bold text-slate-50 bg-indigo-500 px-1.5 md:px-2 py-1 rounded-lg'>
-            {itemCount} {itemCount === user.submitted!.length ? 'total' : 'latest'} posts
+            {itemCount} {itemCount === user.submitted!.length ? 'total' : 'latest'} post{itemCount === 1 ? '' : 's'}
           </span>
           {canLoad ? 
             (<>
