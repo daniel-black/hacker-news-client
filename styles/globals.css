@@ -116,6 +116,6 @@
   }
 
   .promo-text {
-    @apply flex items-center justify-center text-center mx-6 py-3 md:px-24 leading-relaxed;
+    @apply flex items-center justify-center text-center mx-6 py-3 lg:px-10 leading-relaxed;
   }
 }
