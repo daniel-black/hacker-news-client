@@ -114,4 +114,8 @@
   .true-center {
     @apply absolute w-full h-full flex justify-center items-center;
   }
+
+  .promo-text {
+    @apply flex items-center justify-center text-center mx-6 py-3 md:px-24 leading-relaxed;
+  }
 }
